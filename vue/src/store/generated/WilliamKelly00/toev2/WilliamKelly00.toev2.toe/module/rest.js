@@ -179,5 +179,34 @@ export class Api extends HttpClient {
             format: "json",
             ...params,
         });
+        /**
+         * No description
+         *
+         * @tags Query
+         * @name QueryTopicAll
+         * @summary Queries a list of Topic items.
+         * @request GET:/WilliamKelly00/toev2/toe/topic
+         */
+        this.queryTopicAll = (query, params = {}) => this.request({
+            path: `/WilliamKelly00/toev2/toe/topic`,
+            method: "GET",
+            query: query,
+            format: "json",
+            ...params,
+        });
+        /**
+         * No description
+         *
+         * @tags Query
+         * @name QueryTopic
+         * @summary Queries a Topic by id.
+         * @request GET:/WilliamKelly00/toev2/toe/topic/{id}
+         */
+        this.queryTopic = (id, params = {}) => this.request({
+            path: `/WilliamKelly00/toev2/toe/topic/${id}`,
+            method: "GET",
+            format: "json",
+            ...params,
+        });
     }
 }

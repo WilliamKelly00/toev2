@@ -2,6 +2,7 @@ import { Reader, Writer } from "protobufjs/minimal";
 import { Params } from "../toe/params";
 import { Qna } from "../toe/qna";
 import { PageRequest, PageResponse } from "../cosmos/base/query/v1beta1/pagination";
+import { Topic } from "../toe/topic";
 export declare const protobufPackage = "WilliamKelly00.toev2.toe";
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 export interface QueryParamsRequest {
@@ -22,6 +23,19 @@ export interface QueryAllQnaRequest {
 }
 export interface QueryAllQnaResponse {
     qna: Qna[];
+    pagination: PageResponse | undefined;
+}
+export interface QueryGetTopicRequest {
+    id: number;
+}
+export interface QueryGetTopicResponse {
+    Topic: Topic | undefined;
+}
+export interface QueryAllTopicRequest {
+    pagination: PageRequest | undefined;
+}
+export interface QueryAllTopicResponse {
+    Topic: Topic[];
     pagination: PageResponse | undefined;
 }
 export declare const QueryParamsRequest: {
@@ -66,6 +80,34 @@ export declare const QueryAllQnaResponse: {
     toJSON(message: QueryAllQnaResponse): unknown;
     fromPartial(object: DeepPartial<QueryAllQnaResponse>): QueryAllQnaResponse;
 };
+export declare const QueryGetTopicRequest: {
+    encode(message: QueryGetTopicRequest, writer?: Writer): Writer;
+    decode(input: Reader | Uint8Array, length?: number): QueryGetTopicRequest;
+    fromJSON(object: any): QueryGetTopicRequest;
+    toJSON(message: QueryGetTopicRequest): unknown;
+    fromPartial(object: DeepPartial<QueryGetTopicRequest>): QueryGetTopicRequest;
+};
+export declare const QueryGetTopicResponse: {
+    encode(message: QueryGetTopicResponse, writer?: Writer): Writer;
+    decode(input: Reader | Uint8Array, length?: number): QueryGetTopicResponse;
+    fromJSON(object: any): QueryGetTopicResponse;
+    toJSON(message: QueryGetTopicResponse): unknown;
+    fromPartial(object: DeepPartial<QueryGetTopicResponse>): QueryGetTopicResponse;
+};
+export declare const QueryAllTopicRequest: {
+    encode(message: QueryAllTopicRequest, writer?: Writer): Writer;
+    decode(input: Reader | Uint8Array, length?: number): QueryAllTopicRequest;
+    fromJSON(object: any): QueryAllTopicRequest;
+    toJSON(message: QueryAllTopicRequest): unknown;
+    fromPartial(object: DeepPartial<QueryAllTopicRequest>): QueryAllTopicRequest;
+};
+export declare const QueryAllTopicResponse: {
+    encode(message: QueryAllTopicResponse, writer?: Writer): Writer;
+    decode(input: Reader | Uint8Array, length?: number): QueryAllTopicResponse;
+    fromJSON(object: any): QueryAllTopicResponse;
+    toJSON(message: QueryAllTopicResponse): unknown;
+    fromPartial(object: DeepPartial<QueryAllTopicResponse>): QueryAllTopicResponse;
+};
 /** Query defines the gRPC querier service. */
 export interface Query {
     /** Parameters queries the parameters of the module. */
@@ -74,6 +116,10 @@ export interface Query {
     Qna(request: QueryGetQnaRequest): Promise<QueryGetQnaResponse>;
     /** Queries a list of Qna items. */
     QnaAll(request: QueryAllQnaRequest): Promise<QueryAllQnaResponse>;
+    /** Queries a Topic by id. */
+    Topic(request: QueryGetTopicRequest): Promise<QueryGetTopicResponse>;
+    /** Queries a list of Topic items. */
+    TopicAll(request: QueryAllTopicRequest): Promise<QueryAllTopicResponse>;
 }
 export declare class QueryClientImpl implements Query {
     private readonly rpc;
@@ -81,6 +127,8 @@ export declare class QueryClientImpl implements Query {
     Params(request: QueryParamsRequest): Promise<QueryParamsResponse>;
     Qna(request: QueryGetQnaRequest): Promise<QueryGetQnaResponse>;
     QnaAll(request: QueryAllQnaRequest): Promise<QueryAllQnaResponse>;
+    Topic(request: QueryGetTopicRequest): Promise<QueryGetTopicResponse>;
+    TopicAll(request: QueryAllTopicRequest): Promise<QueryAllTopicResponse>;
 }
 interface Rpc {
     request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;

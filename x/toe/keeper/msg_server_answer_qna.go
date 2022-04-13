@@ -14,16 +14,15 @@ func (k msgServer) AnswerQna(goCtx context.Context, msg *types.MsgAnswerQna) (*t
 	// TODO: Handling the message
 	// Get qna by qsh
 	// if one exists
-		// transfer ownership
-		// pay coins (do later)
+	// transfer ownership
+	// pay coins (do later)
 	// else
-		// pay coins (do later)
-
+	// pay coins (do later)
 
 	// Try getting a qna from the store
 	qna, isFound := k.GetQna(ctx, msg.Qsh)
-	
-	if !isFound{
+
+	if !isFound {
 		// wrong answer
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInsufficientFunds, "Wrong answer")
 	}
@@ -33,16 +32,16 @@ func (k msgServer) AnswerQna(goCtx context.Context, msg *types.MsgAnswerQna) (*t
 	// Transfer ownership
 
 	newQna := types.Qna{
-		Index: qna.Qsh, 
-		Qsh: qna.Qsh, 
-		ParentTopic: qna.ParentTopic, 
-		Question: qna.Question, 
-		OpA: qna.OpA, 
-		OpB: qna.OpB, 
-		OpC: qna.OpC, 
-		OpD: qna.OpD, 
-		Reward: qna.Reward, 
-		Owner: msg.Creator, 
+		Index:       qna.Qsh,
+		Qsh:         qna.Qsh,
+		ParentTopic: qna.ParentTopic,
+		Question:    qna.Question,
+		OpA:         qna.OpA,
+		OpB:         qna.OpB,
+		OpC:         qna.OpC,
+		OpD:         qna.OpD,
+		Reward:      qna.Reward,
+		Owner:       msg.Creator,
 	}
 
 	k.SetQna(ctx, newQna)

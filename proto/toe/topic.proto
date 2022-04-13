@@ -1,0 +1,11 @@
+syntax = "proto3";
+package WilliamKelly00.toev2.toe;
+
+option go_package = "github.com/WilliamKelly00/toev2/x/toe/types";
+
+message Topic {
+  uint64 id = 1;
+  string name = 2; 
+  string parentTopic = 3; 
+  string creator = 4;
+}

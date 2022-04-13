@@ -22,6 +22,15 @@ func TestGenesis(t *testing.T) {
 				Index: "1",
 			},
 		},
+		TopicList: []types.Topic{
+			{
+				Id: 0,
+			},
+			{
+				Id: 1,
+			},
+		},
+		TopicCount: 2,
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -34,5 +43,7 @@ func TestGenesis(t *testing.T) {
 	nullify.Fill(got)
 
 	require.ElementsMatch(t, genesisState.QnaList, got.QnaList)
+	require.ElementsMatch(t, genesisState.TopicList, got.TopicList)
+	require.Equal(t, genesisState.TopicCount, got.TopicCount)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

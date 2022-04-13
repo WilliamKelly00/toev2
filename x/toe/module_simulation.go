@@ -32,6 +32,18 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgAnswerQna int = 100
 
+	opWeightMsgCreateTopic = "op_weight_msg_create_chain"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateTopic int = 100
+
+	opWeightMsgUpdateTopic = "op_weight_msg_create_chain"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateTopic int = 100
+
+	opWeightMsgDeleteTopic = "op_weight_msg_create_chain"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteTopic int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -42,6 +54,17 @@ func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 		accs[i] = acc.Address.String()
 	}
 	toeGenesis := types.GenesisState{
+		TopicList: []types.Topic{
+			{
+				Id:      0,
+				Creator: sample.AccAddress(),
+			},
+			{
+				Id:      1,
+				Creator: sample.AccAddress(),
+			},
+		},
+		TopicCount: 2,
 		// this line is used by starport scaffolding # simapp/module/genesisState
 	}
 	simState.GenState[types.ModuleName] = simState.Cdc.MustMarshalJSON(&toeGenesis)
@@ -85,6 +108,39 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	operations = append(operations, simulation.NewWeightedOperation(
 		weightMsgAnswerQna,
 		toesimulation.SimulateMsgAnswerQna(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreateTopic int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateTopic, &weightMsgCreateTopic, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateTopic = defaultWeightMsgCreateTopic
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateTopic,
+		toesimulation.SimulateMsgCreateTopic(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateTopic int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdateTopic, &weightMsgUpdateTopic, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateTopic = defaultWeightMsgUpdateTopic
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateTopic,
+		toesimulation.SimulateMsgUpdateTopic(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteTopic int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDeleteTopic, &weightMsgDeleteTopic, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteTopic = defaultWeightMsgDeleteTopic
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteTopic,
+		toesimulation.SimulateMsgDeleteTopic(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation

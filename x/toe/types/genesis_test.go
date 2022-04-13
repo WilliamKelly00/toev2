@@ -30,6 +30,15 @@ func TestGenesisState_Validate(t *testing.T) {
 						Index: "1",
 					},
 				},
+				TopicList: []types.Topic{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				TopicCount: 2,
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -45,6 +54,32 @@ func TestGenesisState_Validate(t *testing.T) {
 						Index: "0",
 					},
 				},
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated topic",
+			genState: &types.GenesisState{
+				TopicList: []types.Topic{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid topic count",
+			genState: &types.GenesisState{
+				TopicList: []types.Topic{
+					{
+						Id: 1,
+					},
+				},
+				TopicCount: 0,
 			},
 			valid: false,
 		},

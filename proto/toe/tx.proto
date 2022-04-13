@@ -1,6 +1,7 @@
 syntax = "proto3";
 package WilliamKelly00.toev2.toe;
 
+import "toe/topic.proto";
 // this line is used by starport scaffolding # proto/tx/import
 
 option go_package = "github.com/WilliamKelly00/toev2/x/toe/types";
@@ -9,6 +10,9 @@ option go_package = "github.com/WilliamKelly00/toev2/x/toe/types";
 service Msg {
       rpc SubmitQna(MsgSubmitQna) returns (MsgSubmitQnaResponse);
   rpc AnswerQna(MsgAnswerQna) returns (MsgAnswerQnaResponse);
+rpc CreateTopic(MsgCreateTopic) returns (MsgCreateTopicResponse);
+  rpc UpdateTopic(MsgUpdateTopic) returns (MsgUpdateTopicResponse);
+  rpc DeleteTopic(MsgDeleteTopic) returns (MsgDeleteTopicResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -34,5 +38,31 @@ message MsgAnswerQna {
 
 message MsgAnswerQnaResponse {
 }
+
+message MsgCreateTopic {
+  string creator = 1;
+  string name = 2;
+  string parentTopic = 3;
+}
+
+message MsgCreateTopicResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdateTopic {
+  string creator = 1;
+  uint64 id = 2;
+  string name = 3;
+  string parentTopic = 4;
+}
+
+message MsgUpdateTopicResponse {}
+
+message MsgDeleteTopic {
+  string creator = 1;
+  uint64 id = 2;
+}
+
+message MsgDeleteTopicResponse {}
 
 // this line is used by starport scaffolding # proto/tx/message

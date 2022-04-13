@@ -8,7 +8,13 @@ export interface RpcStatus {
     details?: ProtobufAny[];
 }
 export declare type ToeMsgAnswerQnaResponse = object;
+export interface ToeMsgCreateTopicResponse {
+    /** @format uint64 */
+    id?: string;
+}
+export declare type ToeMsgDeleteTopicResponse = object;
 export declare type ToeMsgSubmitQnaResponse = object;
+export declare type ToeMsgUpdateTopicResponse = object;
 /**
  * Params defines the parameters for the module.
  */
@@ -38,8 +44,24 @@ export interface ToeQueryAllQnaResponse {
      */
     pagination?: V1Beta1PageResponse;
 }
+export interface ToeQueryAllTopicResponse {
+    Topic?: ToeTopic[];
+    /**
+     * PageResponse is to be embedded in gRPC response messages where the
+     * corresponding request message has used PageRequest.
+     *
+     *  message SomeResponse {
+     *          repeated Bar results = 1;
+     *          PageResponse page = 2;
+     *  }
+     */
+    pagination?: V1Beta1PageResponse;
+}
 export interface ToeQueryGetQnaResponse {
     qna?: ToeQna;
+}
+export interface ToeQueryGetTopicResponse {
+    Topic?: ToeTopic;
 }
 /**
  * QueryParamsResponse is response type for the Query/Params RPC method.
@@ -47,6 +69,13 @@ export interface ToeQueryGetQnaResponse {
 export interface ToeQueryParamsResponse {
     /** params holds all the parameters of this module. */
     params?: ToeParams;
+}
+export interface ToeTopic {
+    /** @format uint64 */
+    id?: string;
+    name?: string;
+    parentTopic?: string;
+    creator?: string;
 }
 /**
 * message SomeRequest {
@@ -195,5 +224,29 @@ export declare class Api<SecurityDataType extends unknown> extends HttpClient<Se
      * @request GET:/WilliamKelly00/toev2/toe/qna/{index}
      */
     queryQna: (index: string, params?: RequestParams) => Promise<HttpResponse<ToeQueryGetQnaResponse, RpcStatus>>;
+    /**
+     * No description
+     *
+     * @tags Query
+     * @name QueryTopicAll
+     * @summary Queries a list of Topic items.
+     * @request GET:/WilliamKelly00/toev2/toe/topic
+     */
+    queryTopicAll: (query?: {
+        "pagination.key"?: string;
+        "pagination.offset"?: string;
+        "pagination.limit"?: string;
+        "pagination.countTotal"?: boolean;
+        "pagination.reverse"?: boolean;
+    }, params?: RequestParams) => Promise<HttpResponse<ToeQueryAllTopicResponse, RpcStatus>>;
+    /**
+     * No description
+     *
+     * @tags Query
+     * @name QueryTopic
+     * @summary Queries a Topic by id.
+     * @request GET:/WilliamKelly00/toev2/toe/topic/{id}
+     */
+    queryTopic: (id: string, params?: RequestParams) => Promise<HttpResponse<ToeQueryGetTopicResponse, RpcStatus>>;
 }
 export {};

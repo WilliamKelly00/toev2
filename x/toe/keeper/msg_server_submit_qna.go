@@ -21,46 +21,46 @@ func (k msgServer) SubmitQna(goCtx context.Context, msg *types.MsgSubmitQna) (*t
 	// Write qna to store
 
 	var qna = types.Qna{
-		Index: msg.Qsh, 
-		Qsh: msg.Qsh, 
-		ParentTopic: msg.ParentTopic, 
-		Question: msg.Question, 
-		OpA: msg.OpA, 
-		OpB: msg.OpB, 
-		OpC: msg.OpC, 
-		OpD: msg.OpD, 
-		Reward: msg.Reward, 
-		Owner: msg.Creator, 
+		Index:       msg.Qsh,
+		Qsh:         msg.Qsh,
+		ParentTopic: msg.ParentTopic,
+		Question:    msg.Question,
+		OpA:         msg.OpA,
+		OpB:         msg.OpB,
+		OpC:         msg.OpC,
+		OpD:         msg.OpD,
+		Reward:      msg.Reward,
+		Owner:       msg.Creator,
 	}
 
-	 // try getting a qna from the store using the question solution hash as the key
-	 _, isFound := k.GetQna(ctx, qna.Qsh)
-	
- 	// return an error if a qna already exists in the store
- 	if isFound {
+	// try getting a qna from the store using the question solution hash as the key
+	_, isFound := k.GetQna(ctx, qna.Qsh)
+
+	// return an error if a qna already exists in the store
+	if isFound {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "Question already exists")
 	}
 
-  	// get address of the ToE module account
+	// get address of the ToE module account
 	moduleAcct := sdk.AccAddress(crypto.AddressHash([]byte(types.ModuleName)))
-  	// convert the message creator address from a string into sdk.AccAddress
+	// convert the message creator address from a string into sdk.AccAddress
 	creator, err := sdk.AccAddressFromBech32(qna.Owner)
 	if err != nil {
 		panic(err)
 	}
 
-  	// convert tokens from string into sdk.Coins
+	// convert tokens from string into sdk.Coins
 	reward, err := sdk.ParseCoinsNormalized(qna.Reward)
 	if err != nil {
 		panic(err)
 	}
 
-  	// send tokens from the creator to the module account
+	// send tokens from the creator to the module account
 	sdkError := k.bankKeeper.SendCoins(ctx, creator, moduleAcct, reward)
 	if sdkError != nil {
 		return nil, sdkError
 	}
-  	// write the qna to the store
+	// write the qna to the store
 	k.SetQna(ctx, qna)
 
 	return &types.MsgSubmitQnaResponse{}, nil

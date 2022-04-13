@@ -22,7 +22,16 @@ export interface RpcStatus {
 
 export type ToeMsgAnswerQnaResponse = object;
 
+export interface ToeMsgCreateTopicResponse {
+  /** @format uint64 */
+  id?: string;
+}
+
+export type ToeMsgDeleteTopicResponse = object;
+
 export type ToeMsgSubmitQnaResponse = object;
+
+export type ToeMsgUpdateTopicResponse = object;
 
 /**
  * Params defines the parameters for the module.
@@ -57,8 +66,27 @@ export interface ToeQueryAllQnaResponse {
   pagination?: V1Beta1PageResponse;
 }
 
+export interface ToeQueryAllTopicResponse {
+  Topic?: ToeTopic[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
+}
+
 export interface ToeQueryGetQnaResponse {
   qna?: ToeQna;
+}
+
+export interface ToeQueryGetTopicResponse {
+  Topic?: ToeTopic;
 }
 
 /**
@@ -67,6 +95,14 @@ export interface ToeQueryGetQnaResponse {
 export interface ToeQueryParamsResponse {
   /** params holds all the parameters of this module. */
   params?: ToeParams;
+}
+
+export interface ToeTopic {
+  /** @format uint64 */
+  id?: string;
+  name?: string;
+  parentTopic?: string;
+  creator?: string;
 }
 
 /**
@@ -381,6 +417,48 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   queryQna = (index: string, params: RequestParams = {}) =>
     this.request<ToeQueryGetQnaResponse, RpcStatus>({
       path: `/WilliamKelly00/toev2/toe/qna/${index}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryTopicAll
+   * @summary Queries a list of Topic items.
+   * @request GET:/WilliamKelly00/toev2/toe/topic
+   */
+  queryTopicAll = (
+    query?: {
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.countTotal"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<ToeQueryAllTopicResponse, RpcStatus>({
+      path: `/WilliamKelly00/toev2/toe/topic`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryTopic
+   * @summary Queries a Topic by id.
+   * @request GET:/WilliamKelly00/toev2/toe/topic/{id}
+   */
+  queryTopic = (id: string, params: RequestParams = {}) =>
+    this.request<ToeQueryGetTopicResponse, RpcStatus>({
+      path: `/WilliamKelly00/toev2/toe/topic/${id}`,
       method: "GET",
       format: "json",
       ...params,

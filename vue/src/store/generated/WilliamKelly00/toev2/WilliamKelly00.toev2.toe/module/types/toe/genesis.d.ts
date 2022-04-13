@@ -1,12 +1,15 @@
+import { Writer, Reader } from "protobufjs/minimal";
 import { Params } from "../toe/params";
 import { Qna } from "../toe/qna";
-import { Writer, Reader } from "protobufjs/minimal";
+import { Topic } from "../toe/topic";
 export declare const protobufPackage = "WilliamKelly00.toev2.toe";
 /** GenesisState defines the toe module's genesis state. */
 export interface GenesisState {
     params: Params | undefined;
-    /** this line is used by starport scaffolding # genesis/proto/state */
     qnaList: Qna[];
+    topicList: Topic[];
+    /** this line is used by starport scaffolding # genesis/proto/state */
+    topicCount: number;
 }
 export declare const GenesisState: {
     encode(message: GenesisState, writer?: Writer): Writer;

@@ -1,5 +1,6 @@
 /* eslint-disable */
-import { Reader, Writer } from "protobufjs/minimal";
+import { Reader, util, configure, Writer } from "protobufjs/minimal";
+import * as Long from "long";
 
 export const protobufPackage = "WilliamKelly00.toev2.toe";
 
@@ -23,6 +24,32 @@ export interface MsgAnswerQna {
 }
 
 export interface MsgAnswerQnaResponse {}
+
+export interface MsgCreateTopic {
+  creator: string;
+  name: string;
+  parentTopic: string;
+}
+
+export interface MsgCreateTopicResponse {
+  id: number;
+}
+
+export interface MsgUpdateTopic {
+  creator: string;
+  id: number;
+  name: string;
+  parentTopic: string;
+}
+
+export interface MsgUpdateTopicResponse {}
+
+export interface MsgDeleteTopic {
+  creator: string;
+  id: number;
+}
+
+export interface MsgDeleteTopicResponse {}
 
 const baseMsgSubmitQna: object = {
   creator: "",
@@ -374,11 +401,424 @@ export const MsgAnswerQnaResponse = {
   },
 };
 
+const baseMsgCreateTopic: object = { creator: "", name: "", parentTopic: "" };
+
+export const MsgCreateTopic = {
+  encode(message: MsgCreateTopic, writer: Writer = Writer.create()): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.name !== "") {
+      writer.uint32(18).string(message.name);
+    }
+    if (message.parentTopic !== "") {
+      writer.uint32(26).string(message.parentTopic);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgCreateTopic {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgCreateTopic } as MsgCreateTopic;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.name = reader.string();
+          break;
+        case 3:
+          message.parentTopic = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreateTopic {
+    const message = { ...baseMsgCreateTopic } as MsgCreateTopic;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.name !== undefined && object.name !== null) {
+      message.name = String(object.name);
+    } else {
+      message.name = "";
+    }
+    if (object.parentTopic !== undefined && object.parentTopic !== null) {
+      message.parentTopic = String(object.parentTopic);
+    } else {
+      message.parentTopic = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreateTopic): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.name !== undefined && (obj.name = message.name);
+    message.parentTopic !== undefined &&
+      (obj.parentTopic = message.parentTopic);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgCreateTopic>): MsgCreateTopic {
+    const message = { ...baseMsgCreateTopic } as MsgCreateTopic;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.name !== undefined && object.name !== null) {
+      message.name = object.name;
+    } else {
+      message.name = "";
+    }
+    if (object.parentTopic !== undefined && object.parentTopic !== null) {
+      message.parentTopic = object.parentTopic;
+    } else {
+      message.parentTopic = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgCreateTopicResponse: object = { id: 0 };
+
+export const MsgCreateTopicResponse = {
+  encode(
+    message: MsgCreateTopicResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgCreateTopicResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgCreateTopicResponse } as MsgCreateTopicResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgCreateTopicResponse {
+    const message = { ...baseMsgCreateTopicResponse } as MsgCreateTopicResponse;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgCreateTopicResponse): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgCreateTopicResponse>
+  ): MsgCreateTopicResponse {
+    const message = { ...baseMsgCreateTopicResponse } as MsgCreateTopicResponse;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseMsgUpdateTopic: object = {
+  creator: "",
+  id: 0,
+  name: "",
+  parentTopic: "",
+};
+
+export const MsgUpdateTopic = {
+  encode(message: MsgUpdateTopic, writer: Writer = Writer.create()): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.id !== 0) {
+      writer.uint32(16).uint64(message.id);
+    }
+    if (message.name !== "") {
+      writer.uint32(26).string(message.name);
+    }
+    if (message.parentTopic !== "") {
+      writer.uint32(34).string(message.parentTopic);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgUpdateTopic {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgUpdateTopic } as MsgUpdateTopic;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        case 3:
+          message.name = reader.string();
+          break;
+        case 4:
+          message.parentTopic = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgUpdateTopic {
+    const message = { ...baseMsgUpdateTopic } as MsgUpdateTopic;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    if (object.name !== undefined && object.name !== null) {
+      message.name = String(object.name);
+    } else {
+      message.name = "";
+    }
+    if (object.parentTopic !== undefined && object.parentTopic !== null) {
+      message.parentTopic = String(object.parentTopic);
+    } else {
+      message.parentTopic = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgUpdateTopic): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.id !== undefined && (obj.id = message.id);
+    message.name !== undefined && (obj.name = message.name);
+    message.parentTopic !== undefined &&
+      (obj.parentTopic = message.parentTopic);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgUpdateTopic>): MsgUpdateTopic {
+    const message = { ...baseMsgUpdateTopic } as MsgUpdateTopic;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    if (object.name !== undefined && object.name !== null) {
+      message.name = object.name;
+    } else {
+      message.name = "";
+    }
+    if (object.parentTopic !== undefined && object.parentTopic !== null) {
+      message.parentTopic = object.parentTopic;
+    } else {
+      message.parentTopic = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgUpdateTopicResponse: object = {};
+
+export const MsgUpdateTopicResponse = {
+  encode(_: MsgUpdateTopicResponse, writer: Writer = Writer.create()): Writer {
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgUpdateTopicResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgUpdateTopicResponse } as MsgUpdateTopicResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgUpdateTopicResponse {
+    const message = { ...baseMsgUpdateTopicResponse } as MsgUpdateTopicResponse;
+    return message;
+  },
+
+  toJSON(_: MsgUpdateTopicResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(_: DeepPartial<MsgUpdateTopicResponse>): MsgUpdateTopicResponse {
+    const message = { ...baseMsgUpdateTopicResponse } as MsgUpdateTopicResponse;
+    return message;
+  },
+};
+
+const baseMsgDeleteTopic: object = { creator: "", id: 0 };
+
+export const MsgDeleteTopic = {
+  encode(message: MsgDeleteTopic, writer: Writer = Writer.create()): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.id !== 0) {
+      writer.uint32(16).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgDeleteTopic {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgDeleteTopic } as MsgDeleteTopic;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgDeleteTopic {
+    const message = { ...baseMsgDeleteTopic } as MsgDeleteTopic;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgDeleteTopic): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgDeleteTopic>): MsgDeleteTopic {
+    const message = { ...baseMsgDeleteTopic } as MsgDeleteTopic;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseMsgDeleteTopicResponse: object = {};
+
+export const MsgDeleteTopicResponse = {
+  encode(_: MsgDeleteTopicResponse, writer: Writer = Writer.create()): Writer {
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgDeleteTopicResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgDeleteTopicResponse } as MsgDeleteTopicResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgDeleteTopicResponse {
+    const message = { ...baseMsgDeleteTopicResponse } as MsgDeleteTopicResponse;
+    return message;
+  },
+
+  toJSON(_: MsgDeleteTopicResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(_: DeepPartial<MsgDeleteTopicResponse>): MsgDeleteTopicResponse {
+    const message = { ...baseMsgDeleteTopicResponse } as MsgDeleteTopicResponse;
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   SubmitQna(request: MsgSubmitQna): Promise<MsgSubmitQnaResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   AnswerQna(request: MsgAnswerQna): Promise<MsgAnswerQnaResponse>;
+  CreateTopic(request: MsgCreateTopic): Promise<MsgCreateTopicResponse>;
+  UpdateTopic(request: MsgUpdateTopic): Promise<MsgUpdateTopicResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  DeleteTopic(request: MsgDeleteTopic): Promise<MsgDeleteTopicResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -409,6 +849,42 @@ export class MsgClientImpl implements Msg {
       MsgAnswerQnaResponse.decode(new Reader(data))
     );
   }
+
+  CreateTopic(request: MsgCreateTopic): Promise<MsgCreateTopicResponse> {
+    const data = MsgCreateTopic.encode(request).finish();
+    const promise = this.rpc.request(
+      "WilliamKelly00.toev2.toe.Msg",
+      "CreateTopic",
+      data
+    );
+    return promise.then((data) =>
+      MsgCreateTopicResponse.decode(new Reader(data))
+    );
+  }
+
+  UpdateTopic(request: MsgUpdateTopic): Promise<MsgUpdateTopicResponse> {
+    const data = MsgUpdateTopic.encode(request).finish();
+    const promise = this.rpc.request(
+      "WilliamKelly00.toev2.toe.Msg",
+      "UpdateTopic",
+      data
+    );
+    return promise.then((data) =>
+      MsgUpdateTopicResponse.decode(new Reader(data))
+    );
+  }
+
+  DeleteTopic(request: MsgDeleteTopic): Promise<MsgDeleteTopicResponse> {
+    const data = MsgDeleteTopic.encode(request).finish();
+    const promise = this.rpc.request(
+      "WilliamKelly00.toev2.toe.Msg",
+      "DeleteTopic",
+      data
+    );
+    return promise.then((data) =>
+      MsgDeleteTopicResponse.decode(new Reader(data))
+    );
+  }
 }
 
 interface Rpc {
@@ -418,6 +894,16 @@ interface Rpc {
     data: Uint8Array
   ): Promise<Uint8Array>;
 }
+
+declare var self: any | undefined;
+declare var window: any | undefined;
+var globalThis: any = (() => {
+  if (typeof globalThis !== "undefined") return globalThis;
+  if (typeof self !== "undefined") return self;
+  if (typeof window !== "undefined") return window;
+  if (typeof global !== "undefined") return global;
+  throw "Unable to locate global object";
+})();
 
 type Builtin = Date | Function | Uint8Array | string | number | undefined;
 export type DeepPartial<T> = T extends Builtin
@@ -429,3 +915,15 @@ export type DeepPartial<T> = T extends Builtin
   : T extends {}
   ? { [K in keyof T]?: DeepPartial<T[K]> }
   : Partial<T>;
+
+function longToNumber(long: Long): number {
+  if (long.gt(Number.MAX_SAFE_INTEGER)) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  }
+  return long.toNumber();
+}
+
+if (util.Long !== Long) {
+  util.Long = Long as any;
+  configure();
+}
