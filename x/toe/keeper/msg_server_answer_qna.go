@@ -11,6 +11,14 @@ func (k msgServer) AnswerQna(goCtx context.Context, msg *types.MsgAnswerQna) (*t
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	// TODO: Handling the message
+	// Get qna by qsh
+	// if one exists
+		// transfer ownership
+		// pay coins (do later)
+	// else
+		// pay coins (do later)
+
+		
 	_ = ctx
 
 	return &types.MsgAnswerQnaResponse{}, nil

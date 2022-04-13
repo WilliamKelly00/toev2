@@ -165,23 +165,6 @@ export default {
                 throw new SpVuexError('QueryClient:QueryQnaAll', 'API Node Unavailable. Could not perform query: ' + e.message);
             }
         },
-        async sendMsgAnswerQna({ rootGetters }, { value, fee = [], memo = '' }) {
-            try {
-                const txClient = await initTxClient(rootGetters);
-                const msg = await txClient.msgAnswerQna(value);
-                const result = await txClient.signAndBroadcast([msg], { fee: { amount: fee,
-                        gas: "200000" }, memo });
-                return result;
-            }
-            catch (e) {
-                if (e == MissingWalletError) {
-                    throw new SpVuexError('TxClient:MsgAnswerQna:Init', 'Could not initialize signing client. Wallet is required.');
-                }
-                else {
-                    throw new SpVuexError('TxClient:MsgAnswerQna:Send', 'Could not broadcast Tx: ' + e.message);
-                }
-            }
-        },
         async sendMsgSubmitQna({ rootGetters }, { value, fee = [], memo = '' }) {
             try {
                 const txClient = await initTxClient(rootGetters);
@@ -199,18 +182,20 @@ export default {
                 }
             }
         },
-        async MsgAnswerQna({ rootGetters }, { value }) {
+        async sendMsgAnswerQna({ rootGetters }, { value, fee = [], memo = '' }) {
             try {
                 const txClient = await initTxClient(rootGetters);
                 const msg = await txClient.msgAnswerQna(value);
-                return msg;
+                const result = await txClient.signAndBroadcast([msg], { fee: { amount: fee,
+                        gas: "200000" }, memo });
+                return result;
             }
             catch (e) {
                 if (e == MissingWalletError) {
                     throw new SpVuexError('TxClient:MsgAnswerQna:Init', 'Could not initialize signing client. Wallet is required.');
                 }
                 else {
-                    throw new SpVuexError('TxClient:MsgAnswerQna:Create', 'Could not create message: ' + e.message);
+                    throw new SpVuexError('TxClient:MsgAnswerQna:Send', 'Could not broadcast Tx: ' + e.message);
                 }
             }
         },
@@ -226,6 +211,21 @@ export default {
                 }
                 else {
                     throw new SpVuexError('TxClient:MsgSubmitQna:Create', 'Could not create message: ' + e.message);
+                }
+            }
+        },
+        async MsgAnswerQna({ rootGetters }, { value }) {
+            try {
+                const txClient = await initTxClient(rootGetters);
+                const msg = await txClient.msgAnswerQna(value);
+                return msg;
+            }
+            catch (e) {
+                if (e == MissingWalletError) {
+                    throw new SpVuexError('TxClient:MsgAnswerQna:Init', 'Could not initialize signing client. Wallet is required.');
+                }
+                else {
+                    throw new SpVuexError('TxClient:MsgAnswerQna:Create', 'Could not create message: ' + e.message);
                 }
             }
         },

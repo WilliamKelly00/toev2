@@ -2,11 +2,11 @@
 import { SigningStargateClient } from "@cosmjs/stargate";
 import { Registry } from "@cosmjs/proto-signing";
 import { Api } from "./rest";
-import { MsgAnswerQna } from "./types/toe/tx";
 import { MsgSubmitQna } from "./types/toe/tx";
+import { MsgAnswerQna } from "./types/toe/tx";
 const types = [
-    ["/WilliamKelly00.toev2.toe.MsgAnswerQna", MsgAnswerQna],
     ["/WilliamKelly00.toev2.toe.MsgSubmitQna", MsgSubmitQna],
+    ["/WilliamKelly00.toev2.toe.MsgAnswerQna", MsgAnswerQna],
 ];
 export const MissingWalletError = new Error("wallet is required");
 export const registry = new Registry(types);
@@ -27,8 +27,8 @@ const txClient = async (wallet, { addr: addr } = { addr: "http://localhost:26657
     const { address } = (await wallet.getAccounts())[0];
     return {
         signAndBroadcast: (msgs, { fee, memo } = { fee: defaultFee, memo: "" }) => client.signAndBroadcast(address, msgs, fee, memo),
-        msgAnswerQna: (data) => ({ typeUrl: "/WilliamKelly00.toev2.toe.MsgAnswerQna", value: MsgAnswerQna.fromPartial(data) }),
         msgSubmitQna: (data) => ({ typeUrl: "/WilliamKelly00.toev2.toe.MsgSubmitQna", value: MsgSubmitQna.fromPartial(data) }),
+        msgAnswerQna: (data) => ({ typeUrl: "/WilliamKelly00.toev2.toe.MsgAnswerQna", value: MsgAnswerQna.fromPartial(data) }),
     };
 };
 const queryClient = async ({ addr: addr } = { addr: "http://localhost:1317" }) => {

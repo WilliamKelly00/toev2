@@ -4,13 +4,13 @@ import { StdFee } from "@cosmjs/launchpad";
 import { SigningStargateClient } from "@cosmjs/stargate";
 import { Registry, OfflineSigner, EncodeObject, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Api } from "./rest";
-import { MsgAnswerQna } from "./types/toe/tx";
 import { MsgSubmitQna } from "./types/toe/tx";
+import { MsgAnswerQna } from "./types/toe/tx";
 
 
 const types = [
-  ["/WilliamKelly00.toev2.toe.MsgAnswerQna", MsgAnswerQna],
   ["/WilliamKelly00.toev2.toe.MsgSubmitQna", MsgSubmitQna],
+  ["/WilliamKelly00.toev2.toe.MsgAnswerQna", MsgAnswerQna],
   
 ];
 export const MissingWalletError = new Error("wallet is required");
@@ -43,8 +43,8 @@ const txClient = async (wallet: OfflineSigner, { addr: addr }: TxClientOptions =
 
   return {
     signAndBroadcast: (msgs: EncodeObject[], { fee, memo }: SignAndBroadcastOptions = {fee: defaultFee, memo: ""}) => client.signAndBroadcast(address, msgs, fee,memo),
-    msgAnswerQna: (data: MsgAnswerQna): EncodeObject => ({ typeUrl: "/WilliamKelly00.toev2.toe.MsgAnswerQna", value: MsgAnswerQna.fromPartial( data ) }),
     msgSubmitQna: (data: MsgSubmitQna): EncodeObject => ({ typeUrl: "/WilliamKelly00.toev2.toe.MsgSubmitQna", value: MsgSubmitQna.fromPartial( data ) }),
+    msgAnswerQna: (data: MsgAnswerQna): EncodeObject => ({ typeUrl: "/WilliamKelly00.toev2.toe.MsgAnswerQna", value: MsgAnswerQna.fromPartial( data ) }),
     
   };
 };
