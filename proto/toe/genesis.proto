@@ -1,0 +1,16 @@
+syntax = "proto3";
+package WilliamKelly00.toev2.toe;
+
+import "gogoproto/gogo.proto";
+import "toe/params.proto";
+import "toe/qna.proto";
+// this line is used by starport scaffolding # genesis/proto/import
+
+option go_package = "github.com/WilliamKelly00/toev2/x/toe/types";
+
+// GenesisState defines the toe module's genesis state.
+message GenesisState {
+  Params params = 1 [(gogoproto.nullable) = false];
+  repeated Qna qnaList = 2 [(gogoproto.nullable) = false];
+  // this line is used by starport scaffolding # genesis/proto/state
+}

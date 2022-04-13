@@ -1,0 +1,59 @@
+syntax = "proto3";
+package WilliamKelly00.toev2.toe;
+
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "toe/params.proto";
+import "toe/qna.proto";
+// this line is used by starport scaffolding # 1
+
+option go_package = "github.com/WilliamKelly00/toev2/x/toe/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  // Parameters queries the parameters of the module.
+  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/WilliamKelly00/toev2/toe/params";
+  }
+  // Queries a Qna by index.
+	rpc Qna(QueryGetQnaRequest) returns (QueryGetQnaResponse) {
+		option (google.api.http).get = "/WilliamKelly00/toev2/toe/qna/{index}";
+	}
+
+	// Queries a list of Qna items.
+	rpc QnaAll(QueryAllQnaRequest) returns (QueryAllQnaResponse) {
+		option (google.api.http).get = "/WilliamKelly00/toev2/toe/qna";
+	}
+
+// this line is used by starport scaffolding # 2
+}
+
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  // params holds all the parameters of this module.
+  Params params = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryGetQnaRequest {
+	  string index = 1;
+
+}
+
+message QueryGetQnaResponse {
+	Qna qna = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllQnaRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllQnaResponse {
+	repeated Qna qna = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+// this line is used by starport scaffolding # 3

@@ -1,0 +1,38 @@
+syntax = "proto3";
+package WilliamKelly00.toev2.toe;
+
+// this line is used by starport scaffolding # proto/tx/import
+
+option go_package = "github.com/WilliamKelly00/toev2/x/toe/types";
+
+// Msg defines the Msg service.
+service Msg {
+      rpc SubmitQna(MsgSubmitQna) returns (MsgSubmitQnaResponse);
+  rpc AnswerQna(MsgAnswerQna) returns (MsgAnswerQnaResponse);
+// this line is used by starport scaffolding # proto/tx/rpc
+}
+
+message MsgSubmitQna {
+  string creator = 1;
+  string parentTopic = 2;
+  string question = 3;
+  string opA = 4;
+  string opB = 5;
+  string opC = 6;
+  string opD = 7;
+  string qsh = 8;
+  string reward = 9;
+}
+
+message MsgSubmitQnaResponse {
+}
+
+message MsgAnswerQna {
+  string creator = 1;
+  string qsh = 2;
+}
+
+message MsgAnswerQnaResponse {
+}
+
+// this line is used by starport scaffolding # proto/tx/message

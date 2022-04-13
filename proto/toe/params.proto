@@ -1,0 +1,12 @@
+syntax = "proto3";
+package WilliamKelly00.toev2.toe;
+
+import "gogoproto/gogo.proto";
+
+option go_package = "github.com/WilliamKelly00/toev2/x/toe/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (gogoproto.goproto_stringer) = false;
+  
+}

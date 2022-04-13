@@ -1,0 +1,19 @@
+syntax = "proto3";
+package WilliamKelly00.toev2.toe;
+
+option go_package = "github.com/WilliamKelly00/toev2/x/toe/types";
+
+message Qna {
+  string index = 1; 
+  string qsh = 2; 
+  string parentTopic = 3; 
+  string question = 4; 
+  string opA = 5; 
+  string opB = 6; 
+  string opC = 7; 
+  string opD = 8; 
+  string reward = 9; 
+  string owner = 10; 
+  
+}
+
