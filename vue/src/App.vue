@@ -30,7 +30,8 @@ export default {
     let navbarLinks = [
       { name: 'Portfolio', url: '/portfolio' },
       { name: 'Data', url: '/data' },
-      { name: 'Topics', url: '/topics'}
+      { name: 'Topics', url: '/topics'},
+      { name: 'AddQuestion', url: '/addquestion'}
     ]
 
     // computed
