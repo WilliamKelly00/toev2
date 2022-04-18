@@ -13,6 +13,7 @@ service Msg {
 rpc CreateTopic(MsgCreateTopic) returns (MsgCreateTopicResponse);
   rpc UpdateTopic(MsgUpdateTopic) returns (MsgUpdateTopicResponse);
   rpc DeleteTopic(MsgDeleteTopic) returns (MsgDeleteTopicResponse);
+  rpc AnswerQuestion(MsgAnswerQuestion) returns (MsgAnswerQuestionResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -64,5 +65,14 @@ message MsgDeleteTopic {
 }
 
 message MsgDeleteTopicResponse {}
+
+message MsgAnswerQuestion {
+  string creator = 1;
+  string qsh = 2;
+  string backup = 3;
+}
+
+message MsgAnswerQuestionResponse {
+}
 
 // this line is used by starport scaffolding # proto/tx/message

@@ -51,6 +51,14 @@ export interface MsgDeleteTopic {
 
 export interface MsgDeleteTopicResponse {}
 
+export interface MsgAnswerQuestion {
+  creator: string;
+  qsh: string;
+  backup: string;
+}
+
+export interface MsgAnswerQuestionResponse {}
+
 const baseMsgSubmitQna: object = {
   creator: "",
   parentTopic: "",
@@ -811,14 +819,158 @@ export const MsgDeleteTopicResponse = {
   },
 };
 
+const baseMsgAnswerQuestion: object = { creator: "", qsh: "", backup: "" };
+
+export const MsgAnswerQuestion = {
+  encode(message: MsgAnswerQuestion, writer: Writer = Writer.create()): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.qsh !== "") {
+      writer.uint32(18).string(message.qsh);
+    }
+    if (message.backup !== "") {
+      writer.uint32(26).string(message.backup);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgAnswerQuestion {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgAnswerQuestion } as MsgAnswerQuestion;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.qsh = reader.string();
+          break;
+        case 3:
+          message.backup = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgAnswerQuestion {
+    const message = { ...baseMsgAnswerQuestion } as MsgAnswerQuestion;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.qsh !== undefined && object.qsh !== null) {
+      message.qsh = String(object.qsh);
+    } else {
+      message.qsh = "";
+    }
+    if (object.backup !== undefined && object.backup !== null) {
+      message.backup = String(object.backup);
+    } else {
+      message.backup = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgAnswerQuestion): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.qsh !== undefined && (obj.qsh = message.qsh);
+    message.backup !== undefined && (obj.backup = message.backup);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgAnswerQuestion>): MsgAnswerQuestion {
+    const message = { ...baseMsgAnswerQuestion } as MsgAnswerQuestion;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.qsh !== undefined && object.qsh !== null) {
+      message.qsh = object.qsh;
+    } else {
+      message.qsh = "";
+    }
+    if (object.backup !== undefined && object.backup !== null) {
+      message.backup = object.backup;
+    } else {
+      message.backup = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgAnswerQuestionResponse: object = {};
+
+export const MsgAnswerQuestionResponse = {
+  encode(
+    _: MsgAnswerQuestionResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgAnswerQuestionResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgAnswerQuestionResponse,
+    } as MsgAnswerQuestionResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgAnswerQuestionResponse {
+    const message = {
+      ...baseMsgAnswerQuestionResponse,
+    } as MsgAnswerQuestionResponse;
+    return message;
+  },
+
+  toJSON(_: MsgAnswerQuestionResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgAnswerQuestionResponse>
+  ): MsgAnswerQuestionResponse {
+    const message = {
+      ...baseMsgAnswerQuestionResponse,
+    } as MsgAnswerQuestionResponse;
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   SubmitQna(request: MsgSubmitQna): Promise<MsgSubmitQnaResponse>;
   AnswerQna(request: MsgAnswerQna): Promise<MsgAnswerQnaResponse>;
   CreateTopic(request: MsgCreateTopic): Promise<MsgCreateTopicResponse>;
   UpdateTopic(request: MsgUpdateTopic): Promise<MsgUpdateTopicResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   DeleteTopic(request: MsgDeleteTopic): Promise<MsgDeleteTopicResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  AnswerQuestion(
+    request: MsgAnswerQuestion
+  ): Promise<MsgAnswerQuestionResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -883,6 +1035,20 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgDeleteTopicResponse.decode(new Reader(data))
+    );
+  }
+
+  AnswerQuestion(
+    request: MsgAnswerQuestion
+  ): Promise<MsgAnswerQuestionResponse> {
+    const data = MsgAnswerQuestion.encode(request).finish();
+    const promise = this.rpc.request(
+      "WilliamKelly00.toev2.toe.Msg",
+      "AnswerQuestion",
+      data
+    );
+    return promise.then((data) =>
+      MsgAnswerQuestionResponse.decode(new Reader(data))
     );
   }
 }

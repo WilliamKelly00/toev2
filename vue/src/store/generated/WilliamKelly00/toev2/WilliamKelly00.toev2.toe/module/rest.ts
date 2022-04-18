@@ -22,6 +22,8 @@ export interface RpcStatus {
 
 export type ToeMsgAnswerQnaResponse = object;
 
+export type ToeMsgAnswerQuestionResponse = object;
+
 export interface ToeMsgCreateTopicResponse {
   /** @format uint64 */
   id?: string;

@@ -20335,6 +20335,8 @@ definitions:
       freezing clients
   WilliamKelly00.toev2.toe.MsgAnswerQnaResponse:
     type: object
+  WilliamKelly00.toev2.toe.MsgAnswerQuestionResponse:
+    type: object
   WilliamKelly00.toev2.toe.MsgCreateTopicResponse:
     type: object
     properties:

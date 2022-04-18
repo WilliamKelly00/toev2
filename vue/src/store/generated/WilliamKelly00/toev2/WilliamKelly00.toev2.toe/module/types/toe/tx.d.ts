@@ -41,6 +41,13 @@ export interface MsgDeleteTopic {
 }
 export interface MsgDeleteTopicResponse {
 }
+export interface MsgAnswerQuestion {
+    creator: string;
+    qsh: string;
+    backup: string;
+}
+export interface MsgAnswerQuestionResponse {
+}
 export declare const MsgSubmitQna: {
     encode(message: MsgSubmitQna, writer?: Writer): Writer;
     decode(input: Reader | Uint8Array, length?: number): MsgSubmitQna;
@@ -111,14 +118,29 @@ export declare const MsgDeleteTopicResponse: {
     toJSON(_: MsgDeleteTopicResponse): unknown;
     fromPartial(_: DeepPartial<MsgDeleteTopicResponse>): MsgDeleteTopicResponse;
 };
+export declare const MsgAnswerQuestion: {
+    encode(message: MsgAnswerQuestion, writer?: Writer): Writer;
+    decode(input: Reader | Uint8Array, length?: number): MsgAnswerQuestion;
+    fromJSON(object: any): MsgAnswerQuestion;
+    toJSON(message: MsgAnswerQuestion): unknown;
+    fromPartial(object: DeepPartial<MsgAnswerQuestion>): MsgAnswerQuestion;
+};
+export declare const MsgAnswerQuestionResponse: {
+    encode(_: MsgAnswerQuestionResponse, writer?: Writer): Writer;
+    decode(input: Reader | Uint8Array, length?: number): MsgAnswerQuestionResponse;
+    fromJSON(_: any): MsgAnswerQuestionResponse;
+    toJSON(_: MsgAnswerQuestionResponse): unknown;
+    fromPartial(_: DeepPartial<MsgAnswerQuestionResponse>): MsgAnswerQuestionResponse;
+};
 /** Msg defines the Msg service. */
 export interface Msg {
     SubmitQna(request: MsgSubmitQna): Promise<MsgSubmitQnaResponse>;
     AnswerQna(request: MsgAnswerQna): Promise<MsgAnswerQnaResponse>;
     CreateTopic(request: MsgCreateTopic): Promise<MsgCreateTopicResponse>;
     UpdateTopic(request: MsgUpdateTopic): Promise<MsgUpdateTopicResponse>;
-    /** this line is used by starport scaffolding # proto/tx/rpc */
     DeleteTopic(request: MsgDeleteTopic): Promise<MsgDeleteTopicResponse>;
+    /** this line is used by starport scaffolding # proto/tx/rpc */
+    AnswerQuestion(request: MsgAnswerQuestion): Promise<MsgAnswerQuestionResponse>;
 }
 export declare class MsgClientImpl implements Msg {
     private readonly rpc;
@@ -128,6 +150,7 @@ export declare class MsgClientImpl implements Msg {
     CreateTopic(request: MsgCreateTopic): Promise<MsgCreateTopicResponse>;
     UpdateTopic(request: MsgUpdateTopic): Promise<MsgUpdateTopicResponse>;
     DeleteTopic(request: MsgDeleteTopic): Promise<MsgDeleteTopicResponse>;
+    AnswerQuestion(request: MsgAnswerQuestion): Promise<MsgAnswerQuestionResponse>;
 }
 interface Rpc {
     request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;
