@@ -59,6 +59,7 @@
       
       <template #footer>
           <Button label="Submit" icon="pi pi-check" @click="closeModal" autofocus />
+          <!-- <Button label="Submit" icon="pi pi-check" @click="submitAnswer()" autofocus /> -->
       </template>
     </Dialog> 
 
@@ -127,9 +128,11 @@ export default {
       openModal(){
         this.displayModal = true
       },
+      
       closeModal(){
         this.displayModal = false
       },
+
       async onSubmit(){
           const qsh = Base64.stringify(sha256(this.currentQuestion.question + this.selectedAnswer))
 
@@ -152,11 +155,26 @@ export default {
       },
 
       setCurrentQuestion(topic){
+        // TODO: Add randomization to question fetching
         this.currentQuestion = this.qnaMap.get(topic)
         this.openModal();
       },
+
       setSelectedAnswer(answer){
         this.selectedAnswer = answer
+      },
+
+      submitAnswer(){
+        this.closeModal();
+
+        const qsh = Base64.stringify(sha256(this.currentQuestion.question + this.selectedAnswer))
+
+        const qnaAnswer = {
+            qsh: qsh,
+            backup: this.currentQuestion.qsh,
+        }
+
+        this.sendTxn(qnaAnswer)
       },
 
 
