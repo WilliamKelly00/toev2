@@ -18,6 +18,8 @@
     "buffer": "^6.0.3",
     "core-js": "^3.18.2",
     "crypto-js": "^4.1.1",
+    "primeicons": "^5.0.0",
+    "primevue": "^3.12.5",
     "vue": "^3.2.6",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.2"
