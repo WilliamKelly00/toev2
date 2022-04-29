@@ -19,8 +19,8 @@
       <Button @click="setSelectedAnswer(currentQuestion.opD)"> {{currentQuestion.opD}} </Button>
       
       <template #footer>
-          <Button label="Submit" icon="pi pi-check" @click="closeModal" autofocus />
-          <!-- <Button label="Submit" icon="pi pi-check" @click="submitAnswer()" autofocus /> -->
+          <!-- <Button label="Submit" icon="pi pi-check" @click="closeModal" autofocus /> -->
+          <Button label="Submit" icon="pi pi-check" @click="submitAnswer()" autofocus />
       </template>
     </Dialog> 
   </div>
@@ -43,6 +43,9 @@ export default {
     $s.dispatch('WilliamKelly00.toev2.toe/QueryTopicAll', {})
     $s.dispatch('WilliamKelly00.toev2.toe/QueryQnaAll', {})
 
+    let address = computed(() => $s.getters['common/wallet/address'])
+
+
     // computed
     // get all topics in store
     let allTopics = computed(() => $s.getters['WilliamKelly00.toev2.toe/getTopicAll']())
@@ -52,6 +55,7 @@ export default {
 
 
     return {
+      address,
       allTopics,
       allQuestions,
       sendTxn: (qnaAnswer) => $s.dispatch('WilliamKelly00.toev2.toe/sendMsgAnswerQuestion', { value: qnaAnswer, fee: [], memo: ""})
@@ -86,8 +90,10 @@ export default {
         });
         
         (this.allQuestions.qna).forEach(qna => {
-          this.qnaMap.set( qna.parentTopic , this.qnaMap.get(qna.parentTopic).push(qna) )
+          this.qnaMap.get( qna.parentTopic ).push(qna)
         });
+
+      console.log([...this.qnaMap.entries()]);
 
         alert("Loaded!")
       },
@@ -97,6 +103,9 @@ export default {
         const questions = this.qnaMap.get(topic)
         const randomIndex = Math.floor(Math.random() * questions.length)
         this.currentQuestion = questions[randomIndex]
+
+
+        // this.currentQuestion = this.qnaMap.get(topic)
         this.openModal();
       },
 
@@ -113,6 +122,7 @@ export default {
         const qsh = Base64.stringify(sha256(this.currentQuestion.question + this.selectedAnswer))
 
         const qnaAnswer = {
+            creator: this.address,
             qsh: qsh,
             backup: this.currentQuestion.qsh,
         }
