@@ -12,8 +12,6 @@ import (
 func (k msgServer) SubmitQna(goCtx context.Context, msg *types.MsgSubmitQna) (*types.MsgSubmitQnaResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	// TODO: Handling the message
-
 	// Handle adding qna to store
 	// Create qna from message data
 	// Check if qna exists in store
