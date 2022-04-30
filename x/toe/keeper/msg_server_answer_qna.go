@@ -8,6 +8,8 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
+
+// Depreciated: Use the new answer_question function instead
 func (k msgServer) AnswerQna(goCtx context.Context, msg *types.MsgAnswerQna) (*types.MsgAnswerQnaResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 

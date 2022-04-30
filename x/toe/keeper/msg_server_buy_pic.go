@@ -8,10 +8,11 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
+// Functionality to buy a picture link
 func (k msgServer) BuyPic(goCtx context.Context, msg *types.MsgBuyPic) (*types.MsgBuyPicResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	// Try getting a pic from the store
+	// Try getting a picture from the store
 	whois, isFound := k.GetWhois(ctx, msg.Pic)
 	// Set the price at which the picture has to be bought if it didn't have an owner before
 	minPrice := sdk.Coins{sdk.NewInt64Coin("token", 10)}

@@ -8,6 +8,7 @@ import (
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
+// Allows the owner to set the price of a picture
 func (k msgServer) SetPic(goCtx context.Context, msg *types.MsgSetPic) (*types.MsgSetPicResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 

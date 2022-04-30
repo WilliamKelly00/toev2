@@ -12,16 +12,20 @@ import (
 func (k msgServer) AnswerQuestion(goCtx context.Context, msg *types.MsgAnswerQuestion) (*types.MsgAnswerQuestionResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
+	// Try getting the question from the store by quesiton + solution hash
 	qna, isFound := k.GetQna(ctx, msg.Qsh)
 
 	if !isFound {
-		// wrong answer
+		// Then the answer was wrong 
 		// get backup
 		backup, isFound := k.GetQna(ctx, msg.Backup)
+
 		if !isFound {
+			// If the backup doesn't exist, something went wrong.
 			return nil, sdkerrors.Wrap(sdkerrors.ErrInsufficientFunds, "Wrong answer")
 		}
 
+		// If the question is found, but the answer is wrong
 		// pay the current owner
 		price, _ := sdk.ParseCoinsNormalized(backup.Reward)
 
@@ -32,7 +36,7 @@ func (k msgServer) AnswerQuestion(goCtx context.Context, msg *types.MsgAnswerQue
 
 	} else {
 
-		// Transfer ownership
+		// Transfer ownership of the question
 
 		newQna := types.Qna{
 			Index:       qna.Qsh,
