@@ -5,6 +5,7 @@ import "gogoproto/gogo.proto";
 import "toe/params.proto";
 import "toe/qna.proto";
 import "toe/topic.proto";
+import "toe/whois.proto";
 // this line is used by starport scaffolding # genesis/proto/import
 
 option go_package = "github.com/WilliamKelly00/toev2/x/toe/types";
@@ -15,5 +16,6 @@ message GenesisState {
   repeated Qna qnaList = 2 [(gogoproto.nullable) = false];
   repeated Topic topicList = 3 [(gogoproto.nullable) = false];
   uint64 topicCount = 4;
+  repeated Whois whoisList = 5 [(gogoproto.nullable) = false];
   // this line is used by starport scaffolding # genesis/proto/state
 }

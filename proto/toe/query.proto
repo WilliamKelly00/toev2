@@ -7,6 +7,7 @@ import "cosmos/base/query/v1beta1/pagination.proto";
 import "toe/params.proto";
 import "toe/qna.proto";
 import "toe/topic.proto";
+import "toe/whois.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "github.com/WilliamKelly00/toev2/x/toe/types";
@@ -35,6 +36,16 @@ service Query {
 	// Queries a list of Topic items.
 	rpc TopicAll(QueryAllTopicRequest) returns (QueryAllTopicResponse) {
 		option (google.api.http).get = "/WilliamKelly00/toev2/toe/topic";
+	}
+
+// Queries a Whois by index.
+	rpc Whois(QueryGetWhoisRequest) returns (QueryGetWhoisResponse) {
+		option (google.api.http).get = "/WilliamKelly00/toev2/toe/whois/{index}";
+	}
+
+	// Queries a list of Whois items.
+	rpc WhoisAll(QueryAllWhoisRequest) returns (QueryAllWhoisResponse) {
+		option (google.api.http).get = "/WilliamKelly00/toev2/toe/whois";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -81,6 +92,24 @@ message QueryAllTopicRequest {
 
 message QueryAllTopicResponse {
 	repeated Topic Topic = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetWhoisRequest {
+	  string index = 1;
+
+}
+
+message QueryGetWhoisResponse {
+	Whois whois = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllWhoisRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllWhoisResponse {
+	repeated Whois whois = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

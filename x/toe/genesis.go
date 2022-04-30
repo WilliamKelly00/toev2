@@ -20,6 +20,10 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 
 	// Set topic count
 	k.SetTopicCount(ctx, genState.TopicCount)
+	// Set all the whois
+	for _, elem := range genState.WhoisList {
+		k.SetWhois(ctx, elem)
+	}
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetParams(ctx, genState.Params)
 }
@@ -32,6 +36,7 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	genesis.QnaList = k.GetAllQna(ctx)
 	genesis.TopicList = k.GetAllTopic(ctx)
 	genesis.TopicCount = k.GetTopicCount(ctx)
+	genesis.WhoisList = k.GetAllWhois(ctx)
 	// this line is used by starport scaffolding # genesis/module/export
 
 	return genesis

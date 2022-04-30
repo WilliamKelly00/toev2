@@ -1,0 +1,14 @@
+syntax = "proto3";
+package WilliamKelly00.toev2.toe;
+
+option go_package = "github.com/WilliamKelly00/toev2/x/toe/types";
+
+message Whois {
+  string index = 1; 
+  string pic = 2; 
+  string value = 3; 
+  string price = 4; 
+  string owner = 5; 
+  
+}
+

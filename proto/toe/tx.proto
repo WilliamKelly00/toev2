@@ -14,6 +14,8 @@ rpc CreateTopic(MsgCreateTopic) returns (MsgCreateTopicResponse);
   rpc UpdateTopic(MsgUpdateTopic) returns (MsgUpdateTopicResponse);
   rpc DeleteTopic(MsgDeleteTopic) returns (MsgDeleteTopicResponse);
   rpc AnswerQuestion(MsgAnswerQuestion) returns (MsgAnswerQuestionResponse);
+  rpc BuyPic(MsgBuyPic) returns (MsgBuyPicResponse);
+  rpc SetPic(MsgSetPic) returns (MsgSetPicResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -73,6 +75,24 @@ message MsgAnswerQuestion {
 }
 
 message MsgAnswerQuestionResponse {
+}
+
+message MsgBuyPic {
+  string creator = 1;
+  string pic = 2;
+  string bid = 3;
+}
+
+message MsgBuyPicResponse {
+}
+
+message MsgSetPic {
+  string creator = 1;
+  string pic = 2;
+  string value = 3;
+}
+
+message MsgSetPicResponse {
 }
 
 // this line is used by starport scaffolding # proto/tx/message

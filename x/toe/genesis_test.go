@@ -31,6 +31,14 @@ func TestGenesis(t *testing.T) {
 			},
 		},
 		TopicCount: 2,
+		WhoisList: []types.Whois{
+			{
+				Index: "0",
+			},
+			{
+				Index: "1",
+			},
+		},
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -45,5 +53,6 @@ func TestGenesis(t *testing.T) {
 	require.ElementsMatch(t, genesisState.QnaList, got.QnaList)
 	require.ElementsMatch(t, genesisState.TopicList, got.TopicList)
 	require.Equal(t, genesisState.TopicCount, got.TopicCount)
+	require.ElementsMatch(t, genesisState.WhoisList, got.WhoisList)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

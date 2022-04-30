@@ -59,6 +59,22 @@ export interface MsgAnswerQuestion {
 
 export interface MsgAnswerQuestionResponse {}
 
+export interface MsgBuyPic {
+  creator: string;
+  pic: string;
+  bid: string;
+}
+
+export interface MsgBuyPicResponse {}
+
+export interface MsgSetPic {
+  creator: string;
+  pic: string;
+  value: string;
+}
+
+export interface MsgSetPicResponse {}
+
 const baseMsgSubmitQna: object = {
   creator: "",
   parentTopic: "",
@@ -960,6 +976,260 @@ export const MsgAnswerQuestionResponse = {
   },
 };
 
+const baseMsgBuyPic: object = { creator: "", pic: "", bid: "" };
+
+export const MsgBuyPic = {
+  encode(message: MsgBuyPic, writer: Writer = Writer.create()): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.pic !== "") {
+      writer.uint32(18).string(message.pic);
+    }
+    if (message.bid !== "") {
+      writer.uint32(26).string(message.bid);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgBuyPic {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgBuyPic } as MsgBuyPic;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.pic = reader.string();
+          break;
+        case 3:
+          message.bid = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgBuyPic {
+    const message = { ...baseMsgBuyPic } as MsgBuyPic;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.pic !== undefined && object.pic !== null) {
+      message.pic = String(object.pic);
+    } else {
+      message.pic = "";
+    }
+    if (object.bid !== undefined && object.bid !== null) {
+      message.bid = String(object.bid);
+    } else {
+      message.bid = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgBuyPic): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.pic !== undefined && (obj.pic = message.pic);
+    message.bid !== undefined && (obj.bid = message.bid);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgBuyPic>): MsgBuyPic {
+    const message = { ...baseMsgBuyPic } as MsgBuyPic;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.pic !== undefined && object.pic !== null) {
+      message.pic = object.pic;
+    } else {
+      message.pic = "";
+    }
+    if (object.bid !== undefined && object.bid !== null) {
+      message.bid = object.bid;
+    } else {
+      message.bid = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgBuyPicResponse: object = {};
+
+export const MsgBuyPicResponse = {
+  encode(_: MsgBuyPicResponse, writer: Writer = Writer.create()): Writer {
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgBuyPicResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgBuyPicResponse } as MsgBuyPicResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgBuyPicResponse {
+    const message = { ...baseMsgBuyPicResponse } as MsgBuyPicResponse;
+    return message;
+  },
+
+  toJSON(_: MsgBuyPicResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(_: DeepPartial<MsgBuyPicResponse>): MsgBuyPicResponse {
+    const message = { ...baseMsgBuyPicResponse } as MsgBuyPicResponse;
+    return message;
+  },
+};
+
+const baseMsgSetPic: object = { creator: "", pic: "", value: "" };
+
+export const MsgSetPic = {
+  encode(message: MsgSetPic, writer: Writer = Writer.create()): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.pic !== "") {
+      writer.uint32(18).string(message.pic);
+    }
+    if (message.value !== "") {
+      writer.uint32(26).string(message.value);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgSetPic {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgSetPic } as MsgSetPic;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.pic = reader.string();
+          break;
+        case 3:
+          message.value = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgSetPic {
+    const message = { ...baseMsgSetPic } as MsgSetPic;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.pic !== undefined && object.pic !== null) {
+      message.pic = String(object.pic);
+    } else {
+      message.pic = "";
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = String(object.value);
+    } else {
+      message.value = "";
+    }
+    return message;
+  },
+
+  toJSON(message: MsgSetPic): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.pic !== undefined && (obj.pic = message.pic);
+    message.value !== undefined && (obj.value = message.value);
+    return obj;
+  },
+
+  fromPartial(object: DeepPartial<MsgSetPic>): MsgSetPic {
+    const message = { ...baseMsgSetPic } as MsgSetPic;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.pic !== undefined && object.pic !== null) {
+      message.pic = object.pic;
+    } else {
+      message.pic = "";
+    }
+    if (object.value !== undefined && object.value !== null) {
+      message.value = object.value;
+    } else {
+      message.value = "";
+    }
+    return message;
+  },
+};
+
+const baseMsgSetPicResponse: object = {};
+
+export const MsgSetPicResponse = {
+  encode(_: MsgSetPicResponse, writer: Writer = Writer.create()): Writer {
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgSetPicResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgSetPicResponse } as MsgSetPicResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgSetPicResponse {
+    const message = { ...baseMsgSetPicResponse } as MsgSetPicResponse;
+    return message;
+  },
+
+  toJSON(_: MsgSetPicResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(_: DeepPartial<MsgSetPicResponse>): MsgSetPicResponse {
+    const message = { ...baseMsgSetPicResponse } as MsgSetPicResponse;
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   SubmitQna(request: MsgSubmitQna): Promise<MsgSubmitQnaResponse>;
@@ -967,10 +1237,12 @@ export interface Msg {
   CreateTopic(request: MsgCreateTopic): Promise<MsgCreateTopicResponse>;
   UpdateTopic(request: MsgUpdateTopic): Promise<MsgUpdateTopicResponse>;
   DeleteTopic(request: MsgDeleteTopic): Promise<MsgDeleteTopicResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   AnswerQuestion(
     request: MsgAnswerQuestion
   ): Promise<MsgAnswerQuestionResponse>;
+  BuyPic(request: MsgBuyPic): Promise<MsgBuyPicResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  SetPic(request: MsgSetPic): Promise<MsgSetPicResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -1050,6 +1322,26 @@ export class MsgClientImpl implements Msg {
     return promise.then((data) =>
       MsgAnswerQuestionResponse.decode(new Reader(data))
     );
+  }
+
+  BuyPic(request: MsgBuyPic): Promise<MsgBuyPicResponse> {
+    const data = MsgBuyPic.encode(request).finish();
+    const promise = this.rpc.request(
+      "WilliamKelly00.toev2.toe.Msg",
+      "BuyPic",
+      data
+    );
+    return promise.then((data) => MsgBuyPicResponse.decode(new Reader(data)));
+  }
+
+  SetPic(request: MsgSetPic): Promise<MsgSetPicResponse> {
+    const data = MsgSetPic.encode(request).finish();
+    const promise = this.rpc.request(
+      "WilliamKelly00.toev2.toe.Msg",
+      "SetPic",
+      data
+    );
+    return promise.then((data) => MsgSetPicResponse.decode(new Reader(data)));
   }
 }
 

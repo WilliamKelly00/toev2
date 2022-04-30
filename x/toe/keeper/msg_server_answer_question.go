@@ -18,7 +18,7 @@ func (k msgServer) AnswerQuestion(goCtx context.Context, msg *types.MsgAnswerQue
 		// wrong answer
 		// get backup
 		backup, isFound := k.GetQna(ctx, msg.Backup)
-		if !isFound{
+		if !isFound {
 			return nil, sdkerrors.Wrap(sdkerrors.ErrInsufficientFunds, "Wrong answer")
 		}
 

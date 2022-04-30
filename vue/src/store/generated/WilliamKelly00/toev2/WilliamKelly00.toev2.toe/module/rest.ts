@@ -24,12 +24,16 @@ export type ToeMsgAnswerQnaResponse = object;
 
 export type ToeMsgAnswerQuestionResponse = object;
 
+export type ToeMsgBuyPicResponse = object;
+
 export interface ToeMsgCreateTopicResponse {
   /** @format uint64 */
   id?: string;
 }
 
 export type ToeMsgDeleteTopicResponse = object;
+
+export type ToeMsgSetPicResponse = object;
 
 export type ToeMsgSubmitQnaResponse = object;
 
@@ -83,12 +87,31 @@ export interface ToeQueryAllTopicResponse {
   pagination?: V1Beta1PageResponse;
 }
 
+export interface ToeQueryAllWhoisResponse {
+  whois?: ToeWhois[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
+}
+
 export interface ToeQueryGetQnaResponse {
   qna?: ToeQna;
 }
 
 export interface ToeQueryGetTopicResponse {
   Topic?: ToeTopic;
+}
+
+export interface ToeQueryGetWhoisResponse {
+  whois?: ToeWhois;
 }
 
 /**
@@ -105,6 +128,14 @@ export interface ToeTopic {
   name?: string;
   parentTopic?: string;
   creator?: string;
+}
+
+export interface ToeWhois {
+  index?: string;
+  pic?: string;
+  value?: string;
+  price?: string;
+  owner?: string;
 }
 
 /**
@@ -461,6 +492,48 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   queryTopic = (id: string, params: RequestParams = {}) =>
     this.request<ToeQueryGetTopicResponse, RpcStatus>({
       path: `/WilliamKelly00/toev2/toe/topic/${id}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryWhoisAll
+   * @summary Queries a list of Whois items.
+   * @request GET:/WilliamKelly00/toev2/toe/whois
+   */
+  queryWhoisAll = (
+    query?: {
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.countTotal"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<ToeQueryAllWhoisResponse, RpcStatus>({
+      path: `/WilliamKelly00/toev2/toe/whois`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryWhois
+   * @summary Queries a Whois by index.
+   * @request GET:/WilliamKelly00/toev2/toe/whois/{index}
+   */
+  queryWhois = (index: string, params: RequestParams = {}) =>
+    this.request<ToeQueryGetWhoisResponse, RpcStatus>({
+      path: `/WilliamKelly00/toev2/toe/whois/${index}`,
       method: "GET",
       format: "json",
       ...params,

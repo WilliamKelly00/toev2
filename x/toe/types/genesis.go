@@ -12,6 +12,7 @@ func DefaultGenesis() *GenesisState {
 	return &GenesisState{
 		QnaList:   []Qna{},
 		TopicList: []Topic{},
+		WhoisList: []Whois{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -41,6 +42,16 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("topic id should be lower or equal than the last id")
 		}
 		topicIdMap[elem.Id] = true
+	}
+	// Check for duplicated index in whois
+	whoisIndexMap := make(map[string]struct{})
+
+	for _, elem := range gs.WhoisList {
+		index := string(WhoisKey(elem.Index))
+		if _, ok := whoisIndexMap[index]; ok {
+			return fmt.Errorf("duplicated index for whois")
+		}
+		whoisIndexMap[index] = struct{}{}
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 

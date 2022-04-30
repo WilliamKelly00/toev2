@@ -48,6 +48,14 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgAnswerQuestion int = 100
 
+	opWeightMsgBuyPic = "op_weight_msg_create_chain"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgBuyPic int = 100
+
+	opWeightMsgSetPic = "op_weight_msg_create_chain"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgSetPic int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -156,6 +164,28 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	operations = append(operations, simulation.NewWeightedOperation(
 		weightMsgAnswerQuestion,
 		toesimulation.SimulateMsgAnswerQuestion(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgBuyPic int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgBuyPic, &weightMsgBuyPic, nil,
+		func(_ *rand.Rand) {
+			weightMsgBuyPic = defaultWeightMsgBuyPic
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgBuyPic,
+		toesimulation.SimulateMsgBuyPic(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgSetPic int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgSetPic, &weightMsgSetPic, nil,
+		func(_ *rand.Rand) {
+			weightMsgSetPic = defaultWeightMsgSetPic
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgSetPic,
+		toesimulation.SimulateMsgSetPic(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation

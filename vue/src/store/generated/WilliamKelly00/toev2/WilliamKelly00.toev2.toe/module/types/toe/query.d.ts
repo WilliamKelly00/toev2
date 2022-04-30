@@ -3,6 +3,7 @@ import { Params } from "../toe/params";
 import { Qna } from "../toe/qna";
 import { PageRequest, PageResponse } from "../cosmos/base/query/v1beta1/pagination";
 import { Topic } from "../toe/topic";
+import { Whois } from "../toe/whois";
 export declare const protobufPackage = "WilliamKelly00.toev2.toe";
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 export interface QueryParamsRequest {
@@ -36,6 +37,19 @@ export interface QueryAllTopicRequest {
 }
 export interface QueryAllTopicResponse {
     Topic: Topic[];
+    pagination: PageResponse | undefined;
+}
+export interface QueryGetWhoisRequest {
+    index: string;
+}
+export interface QueryGetWhoisResponse {
+    whois: Whois | undefined;
+}
+export interface QueryAllWhoisRequest {
+    pagination: PageRequest | undefined;
+}
+export interface QueryAllWhoisResponse {
+    whois: Whois[];
     pagination: PageResponse | undefined;
 }
 export declare const QueryParamsRequest: {
@@ -108,6 +122,34 @@ export declare const QueryAllTopicResponse: {
     toJSON(message: QueryAllTopicResponse): unknown;
     fromPartial(object: DeepPartial<QueryAllTopicResponse>): QueryAllTopicResponse;
 };
+export declare const QueryGetWhoisRequest: {
+    encode(message: QueryGetWhoisRequest, writer?: Writer): Writer;
+    decode(input: Reader | Uint8Array, length?: number): QueryGetWhoisRequest;
+    fromJSON(object: any): QueryGetWhoisRequest;
+    toJSON(message: QueryGetWhoisRequest): unknown;
+    fromPartial(object: DeepPartial<QueryGetWhoisRequest>): QueryGetWhoisRequest;
+};
+export declare const QueryGetWhoisResponse: {
+    encode(message: QueryGetWhoisResponse, writer?: Writer): Writer;
+    decode(input: Reader | Uint8Array, length?: number): QueryGetWhoisResponse;
+    fromJSON(object: any): QueryGetWhoisResponse;
+    toJSON(message: QueryGetWhoisResponse): unknown;
+    fromPartial(object: DeepPartial<QueryGetWhoisResponse>): QueryGetWhoisResponse;
+};
+export declare const QueryAllWhoisRequest: {
+    encode(message: QueryAllWhoisRequest, writer?: Writer): Writer;
+    decode(input: Reader | Uint8Array, length?: number): QueryAllWhoisRequest;
+    fromJSON(object: any): QueryAllWhoisRequest;
+    toJSON(message: QueryAllWhoisRequest): unknown;
+    fromPartial(object: DeepPartial<QueryAllWhoisRequest>): QueryAllWhoisRequest;
+};
+export declare const QueryAllWhoisResponse: {
+    encode(message: QueryAllWhoisResponse, writer?: Writer): Writer;
+    decode(input: Reader | Uint8Array, length?: number): QueryAllWhoisResponse;
+    fromJSON(object: any): QueryAllWhoisResponse;
+    toJSON(message: QueryAllWhoisResponse): unknown;
+    fromPartial(object: DeepPartial<QueryAllWhoisResponse>): QueryAllWhoisResponse;
+};
 /** Query defines the gRPC querier service. */
 export interface Query {
     /** Parameters queries the parameters of the module. */
@@ -120,6 +162,10 @@ export interface Query {
     Topic(request: QueryGetTopicRequest): Promise<QueryGetTopicResponse>;
     /** Queries a list of Topic items. */
     TopicAll(request: QueryAllTopicRequest): Promise<QueryAllTopicResponse>;
+    /** Queries a Whois by index. */
+    Whois(request: QueryGetWhoisRequest): Promise<QueryGetWhoisResponse>;
+    /** Queries a list of Whois items. */
+    WhoisAll(request: QueryAllWhoisRequest): Promise<QueryAllWhoisResponse>;
 }
 export declare class QueryClientImpl implements Query {
     private readonly rpc;
@@ -129,6 +175,8 @@ export declare class QueryClientImpl implements Query {
     QnaAll(request: QueryAllQnaRequest): Promise<QueryAllQnaResponse>;
     Topic(request: QueryGetTopicRequest): Promise<QueryGetTopicResponse>;
     TopicAll(request: QueryAllTopicRequest): Promise<QueryAllTopicResponse>;
+    Whois(request: QueryGetWhoisRequest): Promise<QueryGetWhoisResponse>;
+    WhoisAll(request: QueryAllWhoisRequest): Promise<QueryAllWhoisResponse>;
 }
 interface Rpc {
     request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;

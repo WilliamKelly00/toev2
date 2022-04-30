@@ -208,5 +208,34 @@ export class Api extends HttpClient {
             format: "json",
             ...params,
         });
+        /**
+         * No description
+         *
+         * @tags Query
+         * @name QueryWhoisAll
+         * @summary Queries a list of Whois items.
+         * @request GET:/WilliamKelly00/toev2/toe/whois
+         */
+        this.queryWhoisAll = (query, params = {}) => this.request({
+            path: `/WilliamKelly00/toev2/toe/whois`,
+            method: "GET",
+            query: query,
+            format: "json",
+            ...params,
+        });
+        /**
+         * No description
+         *
+         * @tags Query
+         * @name QueryWhois
+         * @summary Queries a Whois by index.
+         * @request GET:/WilliamKelly00/toev2/toe/whois/{index}
+         */
+        this.queryWhois = (index, params = {}) => this.request({
+            path: `/WilliamKelly00/toev2/toe/whois/${index}`,
+            method: "GET",
+            format: "json",
+            ...params,
+        });
     }
 }

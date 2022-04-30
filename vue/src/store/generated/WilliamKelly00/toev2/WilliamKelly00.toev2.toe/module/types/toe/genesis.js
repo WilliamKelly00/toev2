@@ -4,6 +4,7 @@ import { util, configure, Writer, Reader } from "protobufjs/minimal";
 import { Params } from "../toe/params";
 import { Qna } from "../toe/qna";
 import { Topic } from "../toe/topic";
+import { Whois } from "../toe/whois";
 export const protobufPackage = "WilliamKelly00.toev2.toe";
 const baseGenesisState = { topicCount: 0 };
 export const GenesisState = {
@@ -20,6 +21,9 @@ export const GenesisState = {
         if (message.topicCount !== 0) {
             writer.uint32(32).uint64(message.topicCount);
         }
+        for (const v of message.whoisList) {
+            Whois.encode(v, writer.uint32(42).fork()).ldelim();
+        }
         return writer;
     },
     decode(input, length) {
@@ -28,6 +32,7 @@ export const GenesisState = {
         const message = { ...baseGenesisState };
         message.qnaList = [];
         message.topicList = [];
+        message.whoisList = [];
         while (reader.pos < end) {
             const tag = reader.uint32();
             switch (tag >>> 3) {
@@ -43,6 +48,9 @@ export const GenesisState = {
                 case 4:
                     message.topicCount = longToNumber(reader.uint64());
                     break;
+                case 5:
+                    message.whoisList.push(Whois.decode(reader, reader.uint32()));
+                    break;
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -54,6 +62,7 @@ export const GenesisState = {
         const message = { ...baseGenesisState };
         message.qnaList = [];
         message.topicList = [];
+        message.whoisList = [];
         if (object.params !== undefined && object.params !== null) {
             message.params = Params.fromJSON(object.params);
         }
@@ -76,6 +85,11 @@ export const GenesisState = {
         else {
             message.topicCount = 0;
         }
+        if (object.whoisList !== undefined && object.whoisList !== null) {
+            for (const e of object.whoisList) {
+                message.whoisList.push(Whois.fromJSON(e));
+            }
+        }
         return message;
     },
     toJSON(message) {
@@ -95,12 +109,19 @@ export const GenesisState = {
             obj.topicList = [];
         }
         message.topicCount !== undefined && (obj.topicCount = message.topicCount);
+        if (message.whoisList) {
+            obj.whoisList = message.whoisList.map((e) => e ? Whois.toJSON(e) : undefined);
+        }
+        else {
+            obj.whoisList = [];
+        }
         return obj;
     },
     fromPartial(object) {
         const message = { ...baseGenesisState };
         message.qnaList = [];
         message.topicList = [];
+        message.whoisList = [];
         if (object.params !== undefined && object.params !== null) {
             message.params = Params.fromPartial(object.params);
         }
@@ -122,6 +143,11 @@ export const GenesisState = {
         }
         else {
             message.topicCount = 0;
+        }
+        if (object.whoisList !== undefined && object.whoisList !== null) {
+            for (const e of object.whoisList) {
+                message.whoisList.push(Whois.fromPartial(e));
+            }
         }
         return message;
     },

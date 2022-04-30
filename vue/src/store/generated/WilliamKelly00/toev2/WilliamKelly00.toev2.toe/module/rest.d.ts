@@ -9,11 +9,13 @@ export interface RpcStatus {
 }
 export declare type ToeMsgAnswerQnaResponse = object;
 export declare type ToeMsgAnswerQuestionResponse = object;
+export declare type ToeMsgBuyPicResponse = object;
 export interface ToeMsgCreateTopicResponse {
     /** @format uint64 */
     id?: string;
 }
 export declare type ToeMsgDeleteTopicResponse = object;
+export declare type ToeMsgSetPicResponse = object;
 export declare type ToeMsgSubmitQnaResponse = object;
 export declare type ToeMsgUpdateTopicResponse = object;
 /**
@@ -58,11 +60,27 @@ export interface ToeQueryAllTopicResponse {
      */
     pagination?: V1Beta1PageResponse;
 }
+export interface ToeQueryAllWhoisResponse {
+    whois?: ToeWhois[];
+    /**
+     * PageResponse is to be embedded in gRPC response messages where the
+     * corresponding request message has used PageRequest.
+     *
+     *  message SomeResponse {
+     *          repeated Bar results = 1;
+     *          PageResponse page = 2;
+     *  }
+     */
+    pagination?: V1Beta1PageResponse;
+}
 export interface ToeQueryGetQnaResponse {
     qna?: ToeQna;
 }
 export interface ToeQueryGetTopicResponse {
     Topic?: ToeTopic;
+}
+export interface ToeQueryGetWhoisResponse {
+    whois?: ToeWhois;
 }
 /**
  * QueryParamsResponse is response type for the Query/Params RPC method.
@@ -77,6 +95,13 @@ export interface ToeTopic {
     name?: string;
     parentTopic?: string;
     creator?: string;
+}
+export interface ToeWhois {
+    index?: string;
+    pic?: string;
+    value?: string;
+    price?: string;
+    owner?: string;
 }
 /**
 * message SomeRequest {
@@ -249,5 +274,29 @@ export declare class Api<SecurityDataType extends unknown> extends HttpClient<Se
      * @request GET:/WilliamKelly00/toev2/toe/topic/{id}
      */
     queryTopic: (id: string, params?: RequestParams) => Promise<HttpResponse<ToeQueryGetTopicResponse, RpcStatus>>;
+    /**
+     * No description
+     *
+     * @tags Query
+     * @name QueryWhoisAll
+     * @summary Queries a list of Whois items.
+     * @request GET:/WilliamKelly00/toev2/toe/whois
+     */
+    queryWhoisAll: (query?: {
+        "pagination.key"?: string;
+        "pagination.offset"?: string;
+        "pagination.limit"?: string;
+        "pagination.countTotal"?: boolean;
+        "pagination.reverse"?: boolean;
+    }, params?: RequestParams) => Promise<HttpResponse<ToeQueryAllWhoisResponse, RpcStatus>>;
+    /**
+     * No description
+     *
+     * @tags Query
+     * @name QueryWhois
+     * @summary Queries a Whois by index.
+     * @request GET:/WilliamKelly00/toev2/toe/whois/{index}
+     */
+    queryWhois: (index: string, params?: RequestParams) => Promise<HttpResponse<ToeQueryGetWhoisResponse, RpcStatus>>;
 }
 export {};

@@ -48,6 +48,20 @@ export interface MsgAnswerQuestion {
 }
 export interface MsgAnswerQuestionResponse {
 }
+export interface MsgBuyPic {
+    creator: string;
+    pic: string;
+    bid: string;
+}
+export interface MsgBuyPicResponse {
+}
+export interface MsgSetPic {
+    creator: string;
+    pic: string;
+    value: string;
+}
+export interface MsgSetPicResponse {
+}
 export declare const MsgSubmitQna: {
     encode(message: MsgSubmitQna, writer?: Writer): Writer;
     decode(input: Reader | Uint8Array, length?: number): MsgSubmitQna;
@@ -132,6 +146,34 @@ export declare const MsgAnswerQuestionResponse: {
     toJSON(_: MsgAnswerQuestionResponse): unknown;
     fromPartial(_: DeepPartial<MsgAnswerQuestionResponse>): MsgAnswerQuestionResponse;
 };
+export declare const MsgBuyPic: {
+    encode(message: MsgBuyPic, writer?: Writer): Writer;
+    decode(input: Reader | Uint8Array, length?: number): MsgBuyPic;
+    fromJSON(object: any): MsgBuyPic;
+    toJSON(message: MsgBuyPic): unknown;
+    fromPartial(object: DeepPartial<MsgBuyPic>): MsgBuyPic;
+};
+export declare const MsgBuyPicResponse: {
+    encode(_: MsgBuyPicResponse, writer?: Writer): Writer;
+    decode(input: Reader | Uint8Array, length?: number): MsgBuyPicResponse;
+    fromJSON(_: any): MsgBuyPicResponse;
+    toJSON(_: MsgBuyPicResponse): unknown;
+    fromPartial(_: DeepPartial<MsgBuyPicResponse>): MsgBuyPicResponse;
+};
+export declare const MsgSetPic: {
+    encode(message: MsgSetPic, writer?: Writer): Writer;
+    decode(input: Reader | Uint8Array, length?: number): MsgSetPic;
+    fromJSON(object: any): MsgSetPic;
+    toJSON(message: MsgSetPic): unknown;
+    fromPartial(object: DeepPartial<MsgSetPic>): MsgSetPic;
+};
+export declare const MsgSetPicResponse: {
+    encode(_: MsgSetPicResponse, writer?: Writer): Writer;
+    decode(input: Reader | Uint8Array, length?: number): MsgSetPicResponse;
+    fromJSON(_: any): MsgSetPicResponse;
+    toJSON(_: MsgSetPicResponse): unknown;
+    fromPartial(_: DeepPartial<MsgSetPicResponse>): MsgSetPicResponse;
+};
 /** Msg defines the Msg service. */
 export interface Msg {
     SubmitQna(request: MsgSubmitQna): Promise<MsgSubmitQnaResponse>;
@@ -139,8 +181,10 @@ export interface Msg {
     CreateTopic(request: MsgCreateTopic): Promise<MsgCreateTopicResponse>;
     UpdateTopic(request: MsgUpdateTopic): Promise<MsgUpdateTopicResponse>;
     DeleteTopic(request: MsgDeleteTopic): Promise<MsgDeleteTopicResponse>;
-    /** this line is used by starport scaffolding # proto/tx/rpc */
     AnswerQuestion(request: MsgAnswerQuestion): Promise<MsgAnswerQuestionResponse>;
+    BuyPic(request: MsgBuyPic): Promise<MsgBuyPicResponse>;
+    /** this line is used by starport scaffolding # proto/tx/rpc */
+    SetPic(request: MsgSetPic): Promise<MsgSetPicResponse>;
 }
 export declare class MsgClientImpl implements Msg {
     private readonly rpc;
@@ -151,6 +195,8 @@ export declare class MsgClientImpl implements Msg {
     UpdateTopic(request: MsgUpdateTopic): Promise<MsgUpdateTopicResponse>;
     DeleteTopic(request: MsgDeleteTopic): Promise<MsgDeleteTopicResponse>;
     AnswerQuestion(request: MsgAnswerQuestion): Promise<MsgAnswerQuestionResponse>;
+    BuyPic(request: MsgBuyPic): Promise<MsgBuyPicResponse>;
+    SetPic(request: MsgSetPic): Promise<MsgSetPicResponse>;
 }
 interface Rpc {
     request(service: string, method: string, data: Uint8Array): Promise<Uint8Array>;

@@ -866,6 +866,248 @@ export const MsgAnswerQuestionResponse = {
         return message;
     },
 };
+const baseMsgBuyPic = { creator: "", pic: "", bid: "" };
+export const MsgBuyPic = {
+    encode(message, writer = Writer.create()) {
+        if (message.creator !== "") {
+            writer.uint32(10).string(message.creator);
+        }
+        if (message.pic !== "") {
+            writer.uint32(18).string(message.pic);
+        }
+        if (message.bid !== "") {
+            writer.uint32(26).string(message.bid);
+        }
+        return writer;
+    },
+    decode(input, length) {
+        const reader = input instanceof Uint8Array ? new Reader(input) : input;
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = { ...baseMsgBuyPic };
+        while (reader.pos < end) {
+            const tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    message.creator = reader.string();
+                    break;
+                case 2:
+                    message.pic = reader.string();
+                    break;
+                case 3:
+                    message.bid = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+            }
+        }
+        return message;
+    },
+    fromJSON(object) {
+        const message = { ...baseMsgBuyPic };
+        if (object.creator !== undefined && object.creator !== null) {
+            message.creator = String(object.creator);
+        }
+        else {
+            message.creator = "";
+        }
+        if (object.pic !== undefined && object.pic !== null) {
+            message.pic = String(object.pic);
+        }
+        else {
+            message.pic = "";
+        }
+        if (object.bid !== undefined && object.bid !== null) {
+            message.bid = String(object.bid);
+        }
+        else {
+            message.bid = "";
+        }
+        return message;
+    },
+    toJSON(message) {
+        const obj = {};
+        message.creator !== undefined && (obj.creator = message.creator);
+        message.pic !== undefined && (obj.pic = message.pic);
+        message.bid !== undefined && (obj.bid = message.bid);
+        return obj;
+    },
+    fromPartial(object) {
+        const message = { ...baseMsgBuyPic };
+        if (object.creator !== undefined && object.creator !== null) {
+            message.creator = object.creator;
+        }
+        else {
+            message.creator = "";
+        }
+        if (object.pic !== undefined && object.pic !== null) {
+            message.pic = object.pic;
+        }
+        else {
+            message.pic = "";
+        }
+        if (object.bid !== undefined && object.bid !== null) {
+            message.bid = object.bid;
+        }
+        else {
+            message.bid = "";
+        }
+        return message;
+    },
+};
+const baseMsgBuyPicResponse = {};
+export const MsgBuyPicResponse = {
+    encode(_, writer = Writer.create()) {
+        return writer;
+    },
+    decode(input, length) {
+        const reader = input instanceof Uint8Array ? new Reader(input) : input;
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = { ...baseMsgBuyPicResponse };
+        while (reader.pos < end) {
+            const tag = reader.uint32();
+            switch (tag >>> 3) {
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+            }
+        }
+        return message;
+    },
+    fromJSON(_) {
+        const message = { ...baseMsgBuyPicResponse };
+        return message;
+    },
+    toJSON(_) {
+        const obj = {};
+        return obj;
+    },
+    fromPartial(_) {
+        const message = { ...baseMsgBuyPicResponse };
+        return message;
+    },
+};
+const baseMsgSetPic = { creator: "", pic: "", value: "" };
+export const MsgSetPic = {
+    encode(message, writer = Writer.create()) {
+        if (message.creator !== "") {
+            writer.uint32(10).string(message.creator);
+        }
+        if (message.pic !== "") {
+            writer.uint32(18).string(message.pic);
+        }
+        if (message.value !== "") {
+            writer.uint32(26).string(message.value);
+        }
+        return writer;
+    },
+    decode(input, length) {
+        const reader = input instanceof Uint8Array ? new Reader(input) : input;
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = { ...baseMsgSetPic };
+        while (reader.pos < end) {
+            const tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    message.creator = reader.string();
+                    break;
+                case 2:
+                    message.pic = reader.string();
+                    break;
+                case 3:
+                    message.value = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+            }
+        }
+        return message;
+    },
+    fromJSON(object) {
+        const message = { ...baseMsgSetPic };
+        if (object.creator !== undefined && object.creator !== null) {
+            message.creator = String(object.creator);
+        }
+        else {
+            message.creator = "";
+        }
+        if (object.pic !== undefined && object.pic !== null) {
+            message.pic = String(object.pic);
+        }
+        else {
+            message.pic = "";
+        }
+        if (object.value !== undefined && object.value !== null) {
+            message.value = String(object.value);
+        }
+        else {
+            message.value = "";
+        }
+        return message;
+    },
+    toJSON(message) {
+        const obj = {};
+        message.creator !== undefined && (obj.creator = message.creator);
+        message.pic !== undefined && (obj.pic = message.pic);
+        message.value !== undefined && (obj.value = message.value);
+        return obj;
+    },
+    fromPartial(object) {
+        const message = { ...baseMsgSetPic };
+        if (object.creator !== undefined && object.creator !== null) {
+            message.creator = object.creator;
+        }
+        else {
+            message.creator = "";
+        }
+        if (object.pic !== undefined && object.pic !== null) {
+            message.pic = object.pic;
+        }
+        else {
+            message.pic = "";
+        }
+        if (object.value !== undefined && object.value !== null) {
+            message.value = object.value;
+        }
+        else {
+            message.value = "";
+        }
+        return message;
+    },
+};
+const baseMsgSetPicResponse = {};
+export const MsgSetPicResponse = {
+    encode(_, writer = Writer.create()) {
+        return writer;
+    },
+    decode(input, length) {
+        const reader = input instanceof Uint8Array ? new Reader(input) : input;
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = { ...baseMsgSetPicResponse };
+        while (reader.pos < end) {
+            const tag = reader.uint32();
+            switch (tag >>> 3) {
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+            }
+        }
+        return message;
+    },
+    fromJSON(_) {
+        const message = { ...baseMsgSetPicResponse };
+        return message;
+    },
+    toJSON(_) {
+        const obj = {};
+        return obj;
+    },
+    fromPartial(_) {
+        const message = { ...baseMsgSetPicResponse };
+        return message;
+    },
+};
 export class MsgClientImpl {
     constructor(rpc) {
         this.rpc = rpc;
@@ -899,6 +1141,16 @@ export class MsgClientImpl {
         const data = MsgAnswerQuestion.encode(request).finish();
         const promise = this.rpc.request("WilliamKelly00.toev2.toe.Msg", "AnswerQuestion", data);
         return promise.then((data) => MsgAnswerQuestionResponse.decode(new Reader(data)));
+    }
+    BuyPic(request) {
+        const data = MsgBuyPic.encode(request).finish();
+        const promise = this.rpc.request("WilliamKelly00.toev2.toe.Msg", "BuyPic", data);
+        return promise.then((data) => MsgBuyPicResponse.decode(new Reader(data)));
+    }
+    SetPic(request) {
+        const data = MsgSetPic.encode(request).finish();
+        const promise = this.rpc.request("WilliamKelly00.toev2.toe.Msg", "SetPic", data);
+        return promise.then((data) => MsgSetPicResponse.decode(new Reader(data)));
     }
 }
 var globalThis = (() => {
