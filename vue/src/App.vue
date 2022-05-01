@@ -31,7 +31,9 @@ export default {
       { name: 'Portfolio', url: '/portfolio' },
       { name: 'Data', url: '/data' },
       { name: 'Topics', url: '/topics'},
-      { name: 'AddQuestion', url: '/addquestion'}
+      { name: 'AddQuestion', url: '/addquestion'},
+      { name: 'NFT', url: '/nft'}
+
     ]
 
     // computed
