@@ -1,26 +1,47 @@
 <template>
   <div>
-      <form @submit.prevent="onSubmit">
-        <label for="question">question:</label><br>
-        <input type="text" id="question" name="question" v-model="question"><br>
-        <label for="parentTopic">parent topic:</label><br>
-        <input type="text" id="parentTopic" name="parentTopic" v-model="parentTopic"><br>
-        <label for="opA">option 1:</label><br>
-        <input type="text" id="opA" name="opA" v-model="opA"><br>
-        <label for="opB">option 2:</label><br>
-        <input type="text" id="opB" name="opB" v-model="opB"><br>
-        <label for="opC">option 3:</label><br>
-        <input type="text" id="opC" name="opC" v-model="opC"><br>
-        <label for="answer">Answer :</label><br>
-        <input type="text" id="answer" name="answer" v-model="answer"><br>
-        <label for="reward">Reward:</label><br>
-        <input type="text" id="reward" name="reward" v-model="reward"><br>
-        <button @click="calcQsh"> CalcQsh </button>
-        <button type="submit">Submit</button>
-        <p>
-            {{question}}
-        </p>
+    <div class="container">
+    <h1>Add a Question:</h1>
+      <form @submit.prevent="onSubmit" class="form">        
+        <span class="p-float-label">
+          <InputText type="text" id="question" name="question" v-model="question"></InputText>
+          <label for="question">Question:</label>
+        </span>
+
+        <span class="p-float-label">
+          <InputText type="text" id="parentTopic" name="parentTopic" v-model="parentTopic"></InputText>
+          <label for="parentTopic">Parent Topic:</label>
+        </span>
+
+        <span class="p-float-label">
+          <InputText type="text" id="opA" name="opA" v-model="opA"></InputText>
+          <label for="opA">Option 1:</label>
+        </span>
+
+        <span class="p-float-label">
+          <InputText type="text" id="opB" name="opB" v-model="opB"></InputText>
+          <label for="opB">Option 2:</label>
+        </span>
+
+        <span class="p-float-label">
+          <InputText type="text" id="opC" name="opC" v-model="opC"></InputText>
+          <label for="opC">Option 3:</label>
+        </span>
+
+
+        <span class="p-float-label">
+          <InputText type="text" id="answer" name="answer" v-model="answer"></InputText>
+          <label for="answer">Answer:</label>
+        </span>
+
+        <span class="p-float-label">
+          <InputText type="text" id="reward" name="reward" v-model="reward"></InputText>
+          <label for="reward">Reward:</label>
+        </span>
+
+        <Button label="Submit" icon="pi pi-check" type="submit" />
     </form>
+    </div>
   </div>
 </template>
 
@@ -83,4 +104,16 @@ export default {
 
 <style>
 
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form > * {
+  margin-top: 30px;
+} 
+
+
+    
 </style>

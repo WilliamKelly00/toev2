@@ -4,25 +4,25 @@ import { StdFee } from "@cosmjs/launchpad";
 import { SigningStargateClient } from "@cosmjs/stargate";
 import { Registry, OfflineSigner, EncodeObject, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Api } from "./rest";
-import { MsgSubmitQna } from "./types/toe/tx";
-import { MsgBuyPic } from "./types/toe/tx";
-import { MsgSetPic } from "./types/toe/tx";
-import { MsgUpdateTopic } from "./types/toe/tx";
-import { MsgAnswerQna } from "./types/toe/tx";
 import { MsgAnswerQuestion } from "./types/toe/tx";
-import { MsgCreateTopic } from "./types/toe/tx";
+import { MsgUpdateTopic } from "./types/toe/tx";
+import { MsgSubmitQna } from "./types/toe/tx";
+import { MsgAnswerQna } from "./types/toe/tx";
+import { MsgSetPic } from "./types/toe/tx";
 import { MsgDeleteTopic } from "./types/toe/tx";
+import { MsgBuyPic } from "./types/toe/tx";
+import { MsgCreateTopic } from "./types/toe/tx";
 
 
 const types = [
-  ["/WilliamKelly00.toev2.toe.MsgSubmitQna", MsgSubmitQna],
-  ["/WilliamKelly00.toev2.toe.MsgBuyPic", MsgBuyPic],
-  ["/WilliamKelly00.toev2.toe.MsgSetPic", MsgSetPic],
-  ["/WilliamKelly00.toev2.toe.MsgUpdateTopic", MsgUpdateTopic],
-  ["/WilliamKelly00.toev2.toe.MsgAnswerQna", MsgAnswerQna],
   ["/WilliamKelly00.toev2.toe.MsgAnswerQuestion", MsgAnswerQuestion],
-  ["/WilliamKelly00.toev2.toe.MsgCreateTopic", MsgCreateTopic],
+  ["/WilliamKelly00.toev2.toe.MsgUpdateTopic", MsgUpdateTopic],
+  ["/WilliamKelly00.toev2.toe.MsgSubmitQna", MsgSubmitQna],
+  ["/WilliamKelly00.toev2.toe.MsgAnswerQna", MsgAnswerQna],
+  ["/WilliamKelly00.toev2.toe.MsgSetPic", MsgSetPic],
   ["/WilliamKelly00.toev2.toe.MsgDeleteTopic", MsgDeleteTopic],
+  ["/WilliamKelly00.toev2.toe.MsgBuyPic", MsgBuyPic],
+  ["/WilliamKelly00.toev2.toe.MsgCreateTopic", MsgCreateTopic],
   
 ];
 export const MissingWalletError = new Error("wallet is required");
@@ -55,14 +55,14 @@ const txClient = async (wallet: OfflineSigner, { addr: addr }: TxClientOptions =
 
   return {
     signAndBroadcast: (msgs: EncodeObject[], { fee, memo }: SignAndBroadcastOptions = {fee: defaultFee, memo: ""}) => client.signAndBroadcast(address, msgs, fee,memo),
-    msgSubmitQna: (data: MsgSubmitQna): EncodeObject => ({ typeUrl: "/WilliamKelly00.toev2.toe.MsgSubmitQna", value: MsgSubmitQna.fromPartial( data ) }),
-    msgBuyPic: (data: MsgBuyPic): EncodeObject => ({ typeUrl: "/WilliamKelly00.toev2.toe.MsgBuyPic", value: MsgBuyPic.fromPartial( data ) }),
-    msgSetPic: (data: MsgSetPic): EncodeObject => ({ typeUrl: "/WilliamKelly00.toev2.toe.MsgSetPic", value: MsgSetPic.fromPartial( data ) }),
-    msgUpdateTopic: (data: MsgUpdateTopic): EncodeObject => ({ typeUrl: "/WilliamKelly00.toev2.toe.MsgUpdateTopic", value: MsgUpdateTopic.fromPartial( data ) }),
-    msgAnswerQna: (data: MsgAnswerQna): EncodeObject => ({ typeUrl: "/WilliamKelly00.toev2.toe.MsgAnswerQna", value: MsgAnswerQna.fromPartial( data ) }),
     msgAnswerQuestion: (data: MsgAnswerQuestion): EncodeObject => ({ typeUrl: "/WilliamKelly00.toev2.toe.MsgAnswerQuestion", value: MsgAnswerQuestion.fromPartial( data ) }),
-    msgCreateTopic: (data: MsgCreateTopic): EncodeObject => ({ typeUrl: "/WilliamKelly00.toev2.toe.MsgCreateTopic", value: MsgCreateTopic.fromPartial( data ) }),
+    msgUpdateTopic: (data: MsgUpdateTopic): EncodeObject => ({ typeUrl: "/WilliamKelly00.toev2.toe.MsgUpdateTopic", value: MsgUpdateTopic.fromPartial( data ) }),
+    msgSubmitQna: (data: MsgSubmitQna): EncodeObject => ({ typeUrl: "/WilliamKelly00.toev2.toe.MsgSubmitQna", value: MsgSubmitQna.fromPartial( data ) }),
+    msgAnswerQna: (data: MsgAnswerQna): EncodeObject => ({ typeUrl: "/WilliamKelly00.toev2.toe.MsgAnswerQna", value: MsgAnswerQna.fromPartial( data ) }),
+    msgSetPic: (data: MsgSetPic): EncodeObject => ({ typeUrl: "/WilliamKelly00.toev2.toe.MsgSetPic", value: MsgSetPic.fromPartial( data ) }),
     msgDeleteTopic: (data: MsgDeleteTopic): EncodeObject => ({ typeUrl: "/WilliamKelly00.toev2.toe.MsgDeleteTopic", value: MsgDeleteTopic.fromPartial( data ) }),
+    msgBuyPic: (data: MsgBuyPic): EncodeObject => ({ typeUrl: "/WilliamKelly00.toev2.toe.MsgBuyPic", value: MsgBuyPic.fromPartial( data ) }),
+    msgCreateTopic: (data: MsgCreateTopic): EncodeObject => ({ typeUrl: "/WilliamKelly00.toev2.toe.MsgCreateTopic", value: MsgCreateTopic.fromPartial( data ) }),
     
   };
 };

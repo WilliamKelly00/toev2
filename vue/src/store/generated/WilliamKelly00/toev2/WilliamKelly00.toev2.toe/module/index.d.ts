@@ -1,14 +1,14 @@
 import { StdFee } from "@cosmjs/launchpad";
 import { Registry, OfflineSigner, EncodeObject } from "@cosmjs/proto-signing";
 import { Api } from "./rest";
-import { MsgSubmitQna } from "./types/toe/tx";
-import { MsgBuyPic } from "./types/toe/tx";
-import { MsgSetPic } from "./types/toe/tx";
-import { MsgUpdateTopic } from "./types/toe/tx";
-import { MsgAnswerQna } from "./types/toe/tx";
 import { MsgAnswerQuestion } from "./types/toe/tx";
-import { MsgCreateTopic } from "./types/toe/tx";
+import { MsgUpdateTopic } from "./types/toe/tx";
+import { MsgSubmitQna } from "./types/toe/tx";
+import { MsgAnswerQna } from "./types/toe/tx";
+import { MsgSetPic } from "./types/toe/tx";
 import { MsgDeleteTopic } from "./types/toe/tx";
+import { MsgBuyPic } from "./types/toe/tx";
+import { MsgCreateTopic } from "./types/toe/tx";
 export declare const MissingWalletError: Error;
 export declare const registry: Registry;
 interface TxClientOptions {
@@ -20,14 +20,14 @@ interface SignAndBroadcastOptions {
 }
 declare const txClient: (wallet: OfflineSigner, { addr: addr }?: TxClientOptions) => Promise<{
     signAndBroadcast: (msgs: EncodeObject[], { fee, memo }?: SignAndBroadcastOptions) => any;
-    msgSubmitQna: (data: MsgSubmitQna) => EncodeObject;
-    msgBuyPic: (data: MsgBuyPic) => EncodeObject;
-    msgSetPic: (data: MsgSetPic) => EncodeObject;
-    msgUpdateTopic: (data: MsgUpdateTopic) => EncodeObject;
-    msgAnswerQna: (data: MsgAnswerQna) => EncodeObject;
     msgAnswerQuestion: (data: MsgAnswerQuestion) => EncodeObject;
-    msgCreateTopic: (data: MsgCreateTopic) => EncodeObject;
+    msgUpdateTopic: (data: MsgUpdateTopic) => EncodeObject;
+    msgSubmitQna: (data: MsgSubmitQna) => EncodeObject;
+    msgAnswerQna: (data: MsgAnswerQna) => EncodeObject;
+    msgSetPic: (data: MsgSetPic) => EncodeObject;
     msgDeleteTopic: (data: MsgDeleteTopic) => EncodeObject;
+    msgBuyPic: (data: MsgBuyPic) => EncodeObject;
+    msgCreateTopic: (data: MsgCreateTopic) => EncodeObject;
 }>;
 interface QueryClientOptions {
     addr: string;
