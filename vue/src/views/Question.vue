@@ -1,2 +1,0 @@
-// fetch a question
-// 
