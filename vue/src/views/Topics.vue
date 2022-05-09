@@ -1,7 +1,5 @@
 <template>
   <div class="container">
-    <button @click="cacheQuestions"> Cache questions </button>
-
     <!-- Map topics from questions -->
     <h1 v-for="(key, idx) in allQuestions.qna" :key="idx">
         <Button :label=key.parentTopic icon="pi pi-external-link" @click="setCurrentQuestion(key.parentTopic)" /> 
@@ -93,13 +91,15 @@ export default {
           this.qnaMap.get( qna.parentTopic ).push(qna)
         });
 
-      console.log([...this.qnaMap.entries()]);
-
-        alert("Loaded!")
       },
 
       setCurrentQuestion(topic){
         //Gets a random question from the list of questions for the given topic
+
+        if(this.qnaMap.size === 0){
+          this.cacheQuestions();
+        }
+
         const questions = this.qnaMap.get(topic)
         const randomIndex = Math.floor(Math.random() * questions.length)
         this.currentQuestion = questions[randomIndex]
